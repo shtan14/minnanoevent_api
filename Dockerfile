@@ -23,4 +23,5 @@ RUN apk update && \
 
 COPY . .
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# docker-compose.ymlにcommandでサーバー起動を記述しているため↓は不要
+# CMD ["rails", "server", "-b", "0.0.0.0"]
