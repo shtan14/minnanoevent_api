@@ -1,12 +1,15 @@
 # workers Integer(ENV.fetch("WEB_CONCURRENCY") { 2 })
+
 max_threads_count = Integer(ENV.fetch("RAILS_MAX_THREADS") { 5 })
 min_threads_count = Integer(ENV.fetch("RAILS_MIN_THREADS") { max_threads_count })
 threads min_threads_count, max_threads_count
+
 # preload_app!
 # rackup      DefaultRackup
-# コメントアウト
-# port ENV.fetch("PORT") { 3000 }
-environment ENV.fetch("RACK_ENV") { "development" }
+
+# port ENV.fetch("PORT") { 3000 } ソケット通信に変更のためコメントアウト
+environment ENV.fetch("RAILS_ENV") { "development" } # RACK_ENV→RAILS_ENV
+
 # nginx ソケット通信設定追加
 # app_root：__dir__（現在のファイルのディレクトリ）の親ディレクトリを取得
 app_root = File.expand_path('..', __dir__)
