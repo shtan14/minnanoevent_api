@@ -14,10 +14,10 @@ environment ENV.fetch("RAILS_ENV") { "development" } # RACK_ENV→RAILS_ENV
 # app_root：__dir__（現在のファイルのディレクトリ）の親ディレクトリを取得
 # app_root = File.expand_path('..', __dir__)
 # bind "unix://#{app_root}/tmp/sockets/puma.sock"
-bind "unix:///app/tmp/sockets/puma.sock"
-# bind "unix://#{Rails.root}/tmp/sockets/puma.sock"
 # stdout_redirect "#{app_root}/log/puma.stdout.log", "#{app_root}/log/puma.stderr.log", true
-stdout_redirect "/app/log/puma.stdout.log", "/app/log/puma.stderr.log", true
+
+bind "unix:///app/tmp/sockets/puma.sock"
+# stdout_redirect "/app/log/puma.stdout.log", "/app/log/puma.stderr.log", true
 
 # on_worker_boot do
 #   ActiveRecord::Base.establish_connection
