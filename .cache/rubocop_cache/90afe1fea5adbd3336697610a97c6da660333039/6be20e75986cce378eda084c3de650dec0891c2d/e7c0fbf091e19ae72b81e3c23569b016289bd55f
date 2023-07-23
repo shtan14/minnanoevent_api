@@ -1,0 +1,1 @@
+[{"severity":"convention","location":{"begin_pos":2196,"end_pos":2197},"message":"Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.","cop_name":"Layout/SpaceInsideArrayLiteralBrackets","status":"uncorrected"}]

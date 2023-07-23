@@ -1,0 +1,59 @@
+# inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+
+AllCops:
+  TargetRubyVersion: 3.2.2
+  TargetRailsVersion: 7.0.5
+  # # 結果のsuggest部分を非表示にする
+  # SuggestExtensions: false
+  NewCops: enable
+  DisplayCopNames: true
+  Exclude:
+    - "Gemfile"
+    - "bin/**/*"
+    - "db/**/*"
+    - "log/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+    - "lib/tasks/auto_annotate_models.rake"
+
+Rails:
+  Enabled: true
+
+# 日本語コメントを許可
+Style/AsciiComments:
+  Enabled: false
+
+# コメントのインデント
+Layout/CommentIndentation:
+  Enabled: false
+
+# 複数行コメントの使用
+Style/BlockComments:
+  Exclude:
+    - 'spec/spec_helper.rb'
+
+# コントローラ等のモジュールをネストしての宣言
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# クラスにコメントを残さなくてもよい
+Style/Documentation:
+  Enabled: false
+
+# # frozen_string_literal: trueの追加を強制
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# 文字列のダブルクォートチェック
+Style/StringLiterals:
+  Enabled: false
+
+Rails/FilePath:
+  Exclude:
+    - 'lib/tasks/dev.rake'
+    - 'spec/rails_helper.rb'

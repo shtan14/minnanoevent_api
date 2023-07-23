@@ -1,0 +1,1 @@
+[{"severity":"convention","location":{"begin_pos":1711,"end_pos":1713},"message":"Style/RedundantConstantBase: Remove redundant `::`.","cop_name":"Style/RedundantConstantBase","status":"uncorrected"}]

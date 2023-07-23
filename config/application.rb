@@ -20,7 +20,7 @@ module App
     # config.eager_load_paths << Rails.root.join("extras")
     # Railsアプリデフォルトのタイムゾーン(default 'UTC')
     # TimeZoneList: http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html
-    config.time_zone = ENV["TZ"]
+    config.time_zone = ENV.fetch("TZ", nil)
 
     # データベースの読み書きに使用するタイムゾーン(:local | :utc(default))
     config.active_record.default_timezone = :utc
@@ -34,13 +34,13 @@ module App
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
-    
+
     # 生成されるテストファイルをRSpecに、使用頻度の高くないSpecファイルが生成されないように設定
     config.generators do |g|
       g.test_framework :rspec,
-        view_specs: false,
-        helper_specs: false,
-        routing_specs: false
+                       view_specs: false,
+                       helper_specs: false,
+                       routing_specs: false
     end
   end
 end
