@@ -1,0 +1,138 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "myapp-container-api",
+            "image": "454240478071.dkr.ecr.ap-northeast-1.amazonaws.com/myapp-api:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "myapp-container-api-3000-tcp",
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "command": [
+                "/bin/sh",
+                "-c",
+                "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
+            ],
+            "environment": [
+                {
+                    "name": "RAILS_LOG_TO_STDOUT",
+                    "value": "true"
+                },
+                {
+                    "name": "RAILS_ENV",
+                    "value": "production"
+                },
+                {
+                    "name": "RAILS_SERVE_STATIC_FILES",
+                    "value": "true"
+                },
+                {
+                    "name": "API_DOMAIN",
+                    "value": "minnanoevent.com"
+                }
+            ],
+            "environmentFiles": [],
+            "mountPoints": [
+                {
+                    "sourceVolume": "tmp",
+                    "containerPath": "/app/tmp/sockets",
+                    "readOnly": false
+                },
+                {
+                    "sourceVolume": "public",
+                    "containerPath": "/app/public",
+                    "readOnly": false
+                }
+            ],
+            "volumesFrom": [],
+            "secrets": [
+                {
+                    "name": "RAILS_MASTER_KEY",
+                    "valueFrom": "myapp_rails_master_key"
+                },
+                {
+                    "name": "DATABASE_URL",
+                    "valueFrom": "myapp_database_url"
+                }
+            ],
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/myapp-task-backend",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        },
+        {
+            "name": "myapp-container-nginx",
+            "image": "454240478071.dkr.ecr.ap-northeast-1.amazonaws.com/myapp-nginx:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "myapp-container-nginx-80-tcp",
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [
+                {
+                    "sourceVolume": "tmp",
+                    "containerPath": "/app/tmp/sockets",
+                    "readOnly": false
+                },
+                {
+                    "sourceVolume": "public",
+                    "containerPath": "/app/public",
+                    "readOnly": false
+                }
+            ],
+            "volumesFrom": [],
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/myapp-task-backend",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }
+    ],
+    "family": "myapp-task-backend",
+    "taskRoleArn": "arn:aws:iam::454240478071:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::454240478071:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "volumes": [
+        {
+            "name": "tmp",
+            "host": {}
+        },
+        {
+            "name": "public",
+            "host": {}
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "runtimePlatform": {
+        "cpuArchitecture": "ARM64",
+        "operatingSystemFamily": "LINUX"
+    }
+}
