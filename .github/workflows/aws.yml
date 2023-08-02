@@ -38,6 +38,14 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+      with:
+          platforms: linux/arm64
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
@@ -45,13 +53,13 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # RailsのDockerイメージをビルドしてECRにプッシュ
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG
+        docker buildx create --use
+        docker buildx build --push -t $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG --platform linux/amd64,linux/arm64 .
         echo "::set-output name=image-api::$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG"
 
         # NginxのDockerイメージをビルドしてECRにプッシュ
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG -f nginx/Dockerfile ./nginx
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG
+        docker buildx create --use
+        docker buildx build --push -t $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG --platform linux/amd64,linux/arm64 -f nginx/Dockerfile ./nginx
         echo "::set-output name=image-nginx::$ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG"
 
     - name: Fill in the new api image ID in the Amazon ECS task definition
