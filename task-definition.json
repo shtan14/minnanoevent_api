@@ -2,7 +2,7 @@
     "containerDefinitions": [
         {
             "name": "myapp-container-api",
-            "image": "454240478071.dkr.ecr.ap-northeast-1.amazonaws.com/myapp-api:latest",
+            "image": "myapp-api",
             "cpu": 0,
             "portMappings": [
                 {
@@ -74,7 +74,7 @@
         },
         {
             "name": "myapp-container-nginx",
-            "image": "454240478071.dkr.ecr.ap-northeast-1.amazonaws.com/myapp-nginx:latest",
+            "image": "myapp-nginx",
             "cpu": 0,
             "portMappings": [
                 {
