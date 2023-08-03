@@ -46,10 +46,12 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
+    - name: Cache bundle
+      id: cache-bundle
+      uses: actions/cache@v2
       with:
-        bundler-cache: true
+        path: vendor/bundle
+        key: gems-v1-${{ hashFiles('Gemfile.lock') }}
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
