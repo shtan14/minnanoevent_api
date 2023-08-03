@@ -18,10 +18,9 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
-    name: Deploy
+  build-and-deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
-    environment: production
 
     steps:
     - name: Checkout
@@ -41,26 +40,32 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
       with:
-          platforms: linux/arm64
-    
+          platforms: linux/amd64
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
+    - name: Build, tag, and push Rails image to Amazon ECR
+      id: build-rails-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_API }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        # RailsのDockerイメージをビルドしてECRにプッシュ
         docker buildx create --use
-        docker buildx build --push -t $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG --platform linux/amd64,linux/arm64 .
-        echo "::set-output name=image-api::$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG"
+        docker buildx build --push -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --platform linux/amd64,linux/arm64 .
+        echo "::set-output name=image-rails::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-        # NginxのDockerイメージをビルドしてECRにプッシュ
+    - name: Build, tag, and push Nginx image to Amazon ECR
+      id: build-nginx-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ env.ECR_REPOSITORY_NGINX }}
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
         docker buildx create --use
-        docker buildx build --push -t $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG --platform linux/amd64,linux/arm64 -f nginx/Dockerfile ./nginx
-        echo "::set-output name=image-nginx::$ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG"
+        docker buildx build --push -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --platform linux/amd64,linux/arm64 -f nginx/Dockerfile ./nginx
+        echo "::set-output name=image-nginx::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
     - name: Fill in the new api image ID in the Amazon ECS task definition
       id: task-def-api
@@ -68,7 +73,7 @@ jobs:
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.CONTAINER_NAME_API }}
-        image: ${{ steps.build-image.outputs.image-api }}
+        image: ${{ needs.build-rails-image.outputs.image-rails }}
 
     - name: Fill in the new nginx image ID in the Amazon ECS task definition
       id: task-def-nginx
@@ -76,7 +81,7 @@ jobs:
       with:
         task-definition: ${{ steps.task-def-api.outputs.task-definition }}
         container-name: ${{ env.CONTAINER_NAME_NGINX }}
-        image: ${{ steps.build-image.outputs.image-nginx }}
+        image: ${{ needs.build-nginx-image.outputs.image-nginx }}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
