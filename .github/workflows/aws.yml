@@ -46,6 +46,11 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
+      - name: Bundler and gem install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
+
     - name: Cache bundle
       id: cache-bundle
       uses: actions/cache@v2
