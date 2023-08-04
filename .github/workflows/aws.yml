@@ -61,9 +61,15 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
+    # - name: Set api image ID as output
+    #   id: output-image-api
+    #   run: echo "::set-output name=image-api::$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG"
+
     - name: Set api image ID as output
       id: output-image-api
-      run: echo "::set-output name=image-api::$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG"
+      run: |
+        echo "::set-output name=image-api::$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG"
+
 
     # - name: Build, tag, and push image to Amazon ECR
     #   id: build-image
