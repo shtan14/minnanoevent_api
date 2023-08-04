@@ -46,33 +46,39 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
-    - name: Bundler and gem install
-      run: |
-        gem install bundler
-        bundle install --jobs 4 --retry 3 --path vendor/bundle
-
-    - name: Cache bundle
-      id: cache-bundle
-      uses: actions/cache@v2
-      with:
-        path: vendor/bundle
-        key: gems-v1-${{ hashFiles('Gemfile.lock') }}
-
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
+    - name: Build and push api image to Amazon ECR
+      id: build-api-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
-      run: |
-        # RailsのDockerイメージをビルドしてECRにプッシュする
-        docker buildx create --use
-        docker buildx build --push -t $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG --platform linux/amd64,linux/arm64 .
-        echo "::set-output name=image-api::$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG"
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        platforms: |
+          linux/amd64,linux/arm64
+        tags: $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
 
-        # NginxのDockerイメージをビルドしてECRにプッシュ
-        docker buildx create --use
-        docker buildx build --push -t $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG --platform linux/amd64,linux/arm64 -f nginx/Dockerfile ./nginx
-        echo "::set-output name=image-nginx::$ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG"
+    - name: Set api image ID as output
+      run: echo "::set-output name=image-api::$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG"
+
+    # - name: Build, tag, and push image to Amazon ECR
+    #   id: build-image
+    #   env:
+    #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+    #     IMAGE_TAG: ${{ github.sha }}
+    #   run: |
+    #     # RailsのDockerイメージをビルドしてECRにプッシュする
+    #     docker buildx create --use
+    #     docker buildx build --push -t $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG --platform linux/amd64,linux/arm64 .
+    #     echo "::set-output name=image-api::$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG"
+
+    #     # NginxのDockerイメージをビルドしてECRにプッシュ
+    #     docker buildx create --use
+    #     docker buildx build --push -t $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG --platform linux/amd64,linux/arm64 -f nginx/Dockerfile ./nginx
+    #     echo "::set-output name=image-nginx::$ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG"
 
     - name: Fill in the new api image ID in the Amazon ECS task definition
       id: task-def-api
