@@ -57,7 +57,8 @@ jobs:
         push: true
         platforms: |
           linux/amd64,linux/arm64
-        tags: $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG
+        # tags: $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG
+        tags: ${{ format('{0}/{1}:{2}', env.ECR_REGISTRY, env.ECR_REPOSITORY_API, env.IMAGE_TAG) }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
