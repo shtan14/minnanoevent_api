@@ -57,7 +57,6 @@ jobs:
         push: true
         platforms: |
           linux/amd64,linux/arm64
-        # tags: $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG
         tags: ${{ format('{0}/{1}:{2}', env.ECR_REGISTRY, env.ECR_REPOSITORY_API, env.IMAGE_TAG) }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
@@ -76,6 +75,25 @@ jobs:
     #     docker buildx create --use
     #     docker buildx build --push -t $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG --platform linux/amd64,linux/arm64 .
     #     echo "::set-output name=image-api::$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG"
+
+    - name: Build and push nginx image to Amazon ECR
+      id: build-nginx-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: ${{ github.sha }}
+      uses: docker/build-push-action@v2
+      with:
+        context: ./nginx
+        push: true
+        platforms: |
+          linux/amd64,linux/arm64
+        tags: ${{ format('{0}/{1}:{2}', env.ECR_REGISTRY, env.ECR_REPOSITORY_NGINX, env.IMAGE_TAG) }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Set nginx image ID as output
+      id: output-image-nginx
+      run: echo "::set-output name=image-nginx::$ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG"
 
     #     # NginxのDockerイメージをビルドしてECRにプッシュ
     #     docker buildx create --use
@@ -96,7 +114,7 @@ jobs:
       with:
         task-definition: ${{ steps.task-def-api.outputs.task-definition }}
         container-name: ${{ env.CONTAINER_NAME_NGINX }}
-        image: ${{ steps.build-image.outputs.image-nginx }}
+        image: ${{ steps.output-image-nginx.outputs.image-nginx }}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
