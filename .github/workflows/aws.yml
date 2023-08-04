@@ -63,6 +63,7 @@ jobs:
         cache-to: type=gha,mode=max
 
     - name: Set api image ID as output
+      id: output-image-api
       run: echo "::set-output name=image-api::$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG"
 
     # - name: Build, tag, and push image to Amazon ECR
@@ -87,7 +88,7 @@ jobs:
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.CONTAINER_NAME_API }}
-        image: ${{ steps.build-image.outputs.image-api }}
+        image: ${{ steps.output-image-api.outputs.image-api }}
 
     - name: Fill in the new nginx image ID in the Amazon ECS task definition
       id: task-def-nginx
