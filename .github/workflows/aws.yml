@@ -57,7 +57,7 @@ jobs:
         push: true
         platforms: |
           linux/amd64,linux/arm64
-        tags: ${{ format('{0}/{1}:{2}', env.ECR_REGISTRY, env.ECR_REPOSITORY_API, env.IMAGE_TAG) }}
+        tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY_API }}:${{ env.IMAGE_TAG }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
@@ -68,7 +68,8 @@ jobs:
     - name: Set api image ID as output
       id: output-image-api
       run: |
-        echo "::set-output name=image-api::$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG"
+        echo "::set-output name=image-api::${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY_API }}:${{ env.IMAGE_TAG }}"
+
 
 
     # - name: Build, tag, and push image to Amazon ECR
@@ -93,13 +94,14 @@ jobs:
         push: true
         platforms: |
           linux/amd64,linux/arm64
-        tags: ${{ format('{0}/{1}:{2}', env.ECR_REGISTRY, env.ECR_REPOSITORY_NGINX, env.IMAGE_TAG) }}
+        tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY_NGINX }}:${{ env.IMAGE_TAG }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
     - name: Set nginx image ID as output
       id: output-image-nginx
-      run: echo "::set-output name=image-nginx::$ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG"
+      run: |
+        echo "::set-output name=image-nginx::${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY_NGINX }}:${{ env.IMAGE_TAG }}"
 
     #     # NginxのDockerイメージをビルドしてECRにプッシュ
     #     docker buildx create --use
