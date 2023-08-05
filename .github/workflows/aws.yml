@@ -38,6 +38,10 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    - name: Debug output after login
+      run: |
+        echo "ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}"
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
       with:
