@@ -80,8 +80,6 @@ jobs:
         echo "ECR_REGISTRY: ${{ env.ECR_REGISTRY }}"
         echo "ECR_REPOSITORY_API: ${{ env.ECR_REPOSITORY_API }}"
         echo "IMAGE_TAG: ${{ env.IMAGE_TAG }}"
-        echo "image-api: ${{ steps.output-image-api.outputs.image-api }}"
-
 
     # - name: Set api image ID as output
     #   id: output-image-api
@@ -98,8 +96,7 @@ jobs:
         echo "ECR_REGISTRY: ${{ env.ECR_REGISTRY }}"
         echo "ECR_REPOSITORY_API: ${{ env.ECR_REPOSITORY_API }}"
         echo "IMAGE_TAG: ${{ env.IMAGE_TAG }}"
-        echo "image-api: ${{ steps.output-image-api.outputs.image-api }}"
-        echo "image-api: ${{ env.image-api }}""
+        echo "image-api: ${{ env.image-api }}"
 
     # - name: Build, tag, and push image to Amazon ECR
     #   id: build-image
