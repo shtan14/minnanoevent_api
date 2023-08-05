@@ -70,6 +70,10 @@ jobs:
       run: |
         echo "::set-output name=image-api::${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY_API }}:${{ env.IMAGE_TAG }}"
 
+    - name: Debug output
+      run: echo "${{ steps.output-image-api.outputs.image-api }}"
+
+
     # - name: Build, tag, and push image to Amazon ECR
     #   id: build-image
     #   env:
