@@ -1,0 +1,1 @@
+[{"severity":"convention","location":{"begin_pos":413,"end_pos":414},"message":"Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.","cop_name":"Style/TrailingCommaInHashLiteral","status":"uncorrected"}]
