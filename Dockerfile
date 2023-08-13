@@ -12,16 +12,12 @@ WORKDIR ${HOME}
 
 COPY Gemfile* ./
 
-RUN apk update && \
-    apk upgrade && \
-    apk add --no-cache ${RUNTIME_PACKAGES} && \
-    apk add --virtual build-dependencies --no-cache ${DEV_PACKAGES} && \
-    # nokogiti Loadエラー対処
-    apk add --no-cache gcompat && \
-    bundle install -j4 && \
-    apk del build-dependencies
+RUN apk add --no-cache ${RUNTIME_PACKAGES} \
+    # nokogiri requires gcompat for compatibility reasons on Alpine
+    gcompat \
+    # Using virtual package for temporary development packages
+    && apk add --virtual build-dependencies --no-cache ${DEV_PACKAGES} \
+    && bundle install -j4 \
+    && apk del build-dependencies
 
 COPY . .
-
-# docker-compose.ymlにcommandでサーバー起動を記述しているため↓は不要
-# CMD ["rails", "server", "-b", "0.0.0.0"]
