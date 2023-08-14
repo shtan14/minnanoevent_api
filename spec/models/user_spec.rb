@@ -3,29 +3,29 @@ require "rails_helper"
 RSpec.describe User do
   describe "名前のバリデーション" do
     let(:user) { User.new(email: "test@example.com", password: "password") }
-  
+
     context "名前が入力されていない場合" do
       it "名前を入力してくださいと表示されること" do
         user.save
         expect(user.errors.full_messages).to include("名前を入力してください")
       end
     end
-  
+
     context "名前が長すぎる場合" do
       let(:max) { 30 }
       let(:long_name) { "a" * (max + 1) }
-  
+
       it "名前は30文字以内で入力してくださいと表示されること" do
         user.name = long_name
         user.save
         expect(user.errors.full_messages).to include("名前は30文字以内で入力してください")
       end
     end
-  
+
     context "名前が最大許容長の場合" do
       let(:max) { 30 }
       let(:max_length_name) { "あ" * max }
-  
+
       it "正常に保存されること" do
         user.name = max_length_name
         expect { user.save }.to change(User, :count).by(1)
@@ -46,7 +46,7 @@ RSpec.describe User do
     context "メールアドレスが長すぎる場合" do
       let(:max) { 255 }
       let(:domain) { "@example.com" }
-      let(:email) { "a" * (max + 1 - domain.length) + domain }
+      let(:email) { ("a" * (max + 1 - domain.length)) + domain }
 
       it "メールアドレスは255文字以内で入力してくださいと表示されること" do
         user.email = email
@@ -57,14 +57,14 @@ RSpec.describe User do
 
     context "正しいメールアドレスの書式" do
       let(:ok_emails) do
-        %w(
+        %w[
           A@EX.COM
           a-_@e-x.c-o_m.j_p
           a.a@ex.com
           a@e.co.js
           1.1@ex.com
           a.a+a@ex.com
-        )
+        ]
       end
 
       it "正常に保存されること" do
@@ -77,7 +77,7 @@ RSpec.describe User do
 
     context "不正なメールアドレスの書式" do
       let(:ng_emails) do
-        %w(
+        %w[
           aaa
           a.ex.com
           メール@ex.com
@@ -91,7 +91,7 @@ RSpec.describe User do
           １@ex.com
           "a"@ex.com
           a@ex@co.jp
-        )
+        ]
       end
 
       it "メールアドレスは不正な値ですと表示されること" do
@@ -106,8 +106,8 @@ RSpec.describe User do
 
   describe "メールアドレスの小文字化" do
     let(:email) { "USER@EXAMPLE.COM" }
-    let(:user) { User.new(email: email) }
-  
+    let(:user) { User.new(email:) }
+
     it "保存時にメールアドレスが小文字に変換されること" do
       user.save
       expect(user.email).to eq(email.downcase)
@@ -120,9 +120,9 @@ RSpec.describe User do
     context "アクティブユーザーが存在しない場合" do
       it "同じメールアドレスで複数のユーザーが登録できること" do
         count = 3
-        expect { 
-          count.times do |n|
-            User.create(name: "test", email: email, password: "password")
+        expect {
+          count.times do |_n|
+            User.create(name: "test", email:, password: "password")
           end
         }.to change(User, :count).by(count)
       end
@@ -130,47 +130,49 @@ RSpec.describe User do
 
     context "ユーザーがアクティブになった場合" do
       before do
-        User.create(name: "test", email: email, password: "password")
+        User.create(name: "test", email:, password: "password")
       end
-      let(:active_user) { User.find_by(email: email) }
+
+      let(:active_user) { User.find_by(email:) }
 
       it "同じメールアドレスでは新たなユーザーが作成できないこと" do
         active_user.update!(activated: true)
         expect(active_user.activated).to be_truthy
 
-        user = User.new(name: "test", email: email, password: "password")
-        expect { user.save }.to_not change(User, :count)
+        user = User.new(name: "test", email:, password: "password")
+        expect { user.save }.not_to change(User, :count)
         expect(user.errors.full_messages).to include("メールアドレスはすでに存在します")
       end
     end
 
     context "アクティブユーザーがいなくなった場合" do
       before do
-        User.create(name: "test", email: email, password: "password", activated: true)
+        User.create(name: "test", email:, password: "password", activated: true)
       end
 
       it "ユーザーは正常に保存できること" do
-        User.find_by(email: email, activated: true).destroy!
-        
-        expect { 
-          User.create(name: "test", email: email, password: "password", activated: true)
+        User.find_by(email:, activated: true).destroy!
+
+        expect {
+          User.create(name: "test", email:, password: "password", activated: true)
         }.to change(User, :count).by(1)
       end
     end
 
     context "一意性が保たれているか" do
       before do
-        User.create(name: "test", email: email, password: "password", activated: true)
+        User.create(name: "test", email:, password: "password", activated: true)
       end
 
       it "アクティブな同じメールアドレスのユーザーが1人だけであること" do
-        expect(User.where(email: email, activated: true).count).to eq(1)
+        expect(User.where(email:, activated: true).count).to eq(1)
       end
     end
   end
 
   describe "パスワードのバリデーション" do
     let(:user) { User.new(name: "test", email: "test@example.com") }
+
     context "パスワードが入力されていない場合" do
       it "パスワードを入力してくださいと表示されること" do
         user.save
@@ -196,25 +198,25 @@ RSpec.describe User do
 
     context "書式のバリデーション" do
       let(:ok_passwords) do
-        %w(
+        %w[
           pass---word
           ________
           12341234
           ____pass
           pass----
           PASSWORD
-        )
+        ]
       end
 
       let(:ng_passwords) do
-        %w(
+        %w[
           pass/word
           pass.word
           |~=?+"a"
           １２３４５６７８
           ＡＢＣＤＥＦＧＨ
           password@
-        )
+        ]
       end
 
       it "正しい書式の場合、正常に保存されること" do
