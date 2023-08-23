@@ -35,6 +35,10 @@
                 {
                     "name": "API_DOMAIN",
                     "value": "minnanoevent.com"
+                },
+                {
+                    "name": "BASE_URL",
+                    "value": "https://backend.minnanoevent.com"
                 }
             ],
             "environmentFiles": [],
