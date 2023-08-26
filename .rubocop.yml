@@ -176,3 +176,6 @@ Rails/FilePath:
   Exclude:
     - 'lib/tasks/dev.rake'
     - 'spec/rails_helper.rb'
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
