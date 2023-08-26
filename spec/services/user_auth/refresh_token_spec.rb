@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe UserAuth::RefreshToken, "トークンリフレッシュ" do
+RSpec.describe UserAuth::RefreshToken do
   include ActiveSupport::Testing::TimeHelpers
   before do
     @user = active_user
@@ -32,7 +32,7 @@ RSpec.describe UserAuth::RefreshToken, "トークンリフレッシュ" do
   describe "デコード" do
     it "デコードユーザーは一致していること" do
       decode = UserAuth::RefreshToken.new(token: @encode.token)
-      payload = decode.payload
+      # payload = decode.payload
       token_user = decode.entity_for_user
       expect(token_user).to eq(@user)
     end
@@ -53,7 +53,7 @@ RSpec.describe UserAuth::RefreshToken, "トークンリフレッシュ" do
     end
 
     it "トークンが書き換えられた場合エラーを吐いていること" do
-      invalid_token = @encode.token + "a"
+      invalid_token = "#{@encode.token}a"
       expect {
         UserAuth::RefreshToken.new(token: invalid_token)
       }.to raise_error(JWT::VerificationError)

@@ -22,9 +22,9 @@ module UserAuth
     end
 
     # 暗号化されたuserIDからユーザーを取得する
-    def entity_for_user(id = nil)
-      id ||= @user_id
-      User.find(decrypt_for(id))
+    def entity_for_user(user_id = nil)
+      user_id ||= @user_id
+      User.find(decrypt_for(user_id))
     end
 
     private
