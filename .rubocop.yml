@@ -117,6 +117,9 @@ RSpec/MultipleExpectations:
 RSpec/NestedGroups:
   Enabled: false
 
+RSpec/NoExpectationExample:
+  Enabled: false
+
 # 複数行コメントの使用
 Style/BlockComments:
   Exclude:
