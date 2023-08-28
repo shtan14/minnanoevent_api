@@ -25,6 +25,7 @@ module UserHelpers
 
   # レスポンスJSONをハッシュで返す
   def res_body
+    puts "Response Body: #{@response.body}" # デバッグ
     JSON.parse(@response.body)
   end
 end

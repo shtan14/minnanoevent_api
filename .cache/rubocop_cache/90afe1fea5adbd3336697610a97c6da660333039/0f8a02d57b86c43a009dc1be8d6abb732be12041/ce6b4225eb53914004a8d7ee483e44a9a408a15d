@@ -1,0 +1,1 @@
+[{"severity":"convention","location":{"begin_pos":862,"end_pos":903},"message":"Rails/EagerEvaluationLogMessage: Pass a block to `Rails.logger.debug`.","cop_name":"Rails/EagerEvaluationLogMessage","status":"uncorrected"}]

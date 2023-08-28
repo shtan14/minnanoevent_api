@@ -114,6 +114,7 @@ class Api::V1::AuthTokenController < ApplicationController
 
    # decode jti != user.refresh_jti のエラー処理
     def invalid_jti
+      puts "InvalidJtiError caught!" # デバッグ
       msg = "Invalid jti for refresh token"
       render status: :unauthorized, json: { status: 401, error: msg }
     end

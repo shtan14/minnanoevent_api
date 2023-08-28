@@ -16,13 +16,14 @@ RSpec.describe Api::V1::AuthTokenController do
   end
 
   def response_check_of_invalid_request(status, error_msg = nil)
-    expect(response.status).to eq status
+    expect(response.status).to eq(status)
     @user.reload
     expect(@user.refresh_jti).to be_nil
+
     if error_msg.nil?
       expect(response.body).to be_blank
     else
-      expect(response.parsed_body["error"]).to eq error_msg
+      expect(res_body["error"]).to eq(error_msg)
     end
   end
 
@@ -40,11 +41,11 @@ RSpec.describe Api::V1::AuthTokenController do
     end
 
     it "レスポンスのユーザーIDが正しいこと" do
-      expect(response.parsed_body["user"]["id"]).to eq @user.id
+      expect(res_body["user"]["id"]).to eq @user.id
     end
 
     it "レスポンスの有効期限が想定通りであること" do
-      expect(response.parsed_body["expires"]).to be_within(1).of(@access_lifetime_to_i)
+      expect(res_body["expires"]).to be_within(1).of(@access_lifetime_to_i)
     end
 
     it "access_tokenが正しくデコードされ、ユーザーと期限が一致していること" do
@@ -96,14 +97,14 @@ RSpec.describe Api::V1::AuthTokenController do
     end
   end
 
-  describe "トークンのリフレッシュ" do
+  describe "有効なリフレッシュ" do
     context "refreshアクションからの有効なリフレッシュ" do
       before do
         # 有効なログイン
         login(@params)
         expect(response).to have_http_status(:ok)
         @user.reload
-        @old_access_token = response.parsed_body[@access_token_key]
+        @old_access_token = res_body[@access_token_key]
         @old_refresh_token = cookies[@session_key]
         @old_user_jti = @user.refresh_jti
       end
@@ -118,7 +119,7 @@ RSpec.describe Api::V1::AuthTokenController do
         refresh_api
         expect(response).to have_http_status(:ok)
         @user.reload
-        new_access_token = response.parsed_body[@access_token_key]
+        new_access_token = res_body[@access_token_key]
         new_refresh_token = cookies[@session_key]
         new_user_jti = @user.refresh_jti
 
@@ -139,46 +140,40 @@ RSpec.describe Api::V1::AuthTokenController do
     end
   end
 
-  describe "無効なリフレッシュの確認" do
-    it "refresh_tokenが存在しない場合、401を返すこと" do
+  describe "無効なリフレッシュ" do
+    it "refresh_tokenが存在しない場合はアクセスできないこと" do
+      refresh_api
+      response_check_of_invalid_request 401
+    end
+
+    it "2回ログインを行ったあと古いrefresh_tokenでアクセスするとエラーを返すこと" do
+      # 1つ目のブラウザでログイン
+      login(@params)
+      expect(response).to have_http_status(:ok)
+      old_refresh_token = cookies[@session_key]
+
+      # 2つ目のブラウザでログイン
+      login(@params)
+      expect(response).to have_http_status(:ok)
+      new_refresh_token = cookies[@session_key]
+
+      # cookieに古いrefresh_tokenをセット
+      cookies[@session_key] = old_refresh_token
+      expect(cookies[@session_key]).not_to be_blank
+
+      # 1つ目のブラウザ(古いrefresh_token)でアクセス
       refresh_api
       expect(response).to have_http_status(:unauthorized)
+
+      # cookieは削除されているか
+      expect(cookies[@session_key]).to be_blank
+
+      # jtiエラーはカスタムメッセージを返しているか
+      # 
+      expect(res_body["error"]).to eq("Invalid jti for refresh token")
     end
 
-    context "ユーザーが2回ログインする場合" do
-      before do
-        # 1つ目のブラウザでログイン
-        login(@params)
-        expect(response).to have_http_status(:ok)
-        @old_refresh_token = cookies[@session_key]
-
-        # 2つ目のブラウザでログイン
-        login(@params)
-        expect(response).to have_http_status(:ok)
-        @new_refresh_token = cookies[@session_key]
-
-        # 古いrefresh_tokenをcookieにセット
-        cookies[@session_key] = @old_refresh_token
-        expect(cookies[@session_key]).not_to be_blank
-      end
-
-      it "古いrefresh_tokenで401を返すこと" do
-        refresh_api
-        expect(response).to have_http_status(:unauthorized)
-      end
-
-      it "古いrefresh_tokenをcookieから削除すること" do
-        refresh_api
-        expect(cookies[@session_key]).to be_blank
-      end
-
-      it "jtiエラーの際、カスタムエラーメッセージを返すこと" do
-        refresh_api
-        expect(response.parsed_body["error"]).to eq "Invalid jti for refresh token"
-      end
-    end
-
-    it "refresh_tokenの有効期限後は401を返すこと" do
+    it "有効期限後はアクセスが失敗すること" do
       travel_to(@refresh_lifetime.from_now) do
         refresh_api
         expect(response).to have_http_status(:unauthorized)
@@ -208,13 +203,11 @@ RSpec.describe Api::V1::AuthTokenController do
       # userのjtiが削除されているか
       @user.reload
       expect(@user.refresh_jti).to be_nil
-    end
 
-    it "sessionがない状態でのログアウトはエラーを返すこと" do
+    # sessionがない状態でログアウトしたらエラーが返ってくるか
       cookies[@session_key] = nil
       logout
-      expect(response).to have_http_status(:unauthorized)
-      expect(response.parsed_body["error"]).to eq "Unauthorized"
+      response_check_of_invalid_request 401
     end
 
     context "session有効期限後のログアウト" do
@@ -222,6 +215,7 @@ RSpec.describe Api::V1::AuthTokenController do
         # 有効なログイン
         login(@params)
         expect(response).to have_http_status(:ok)
+        expect(cookies[@session_key]).not_to be_blank
       end
 
       it "有効期限後にログアウトするとエラーが返ること" do
