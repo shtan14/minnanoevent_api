@@ -25,6 +25,7 @@ jobs:
       RAILS_ENV: test
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       BASE_URL: "http://localhost"
+      TZ: Asia/Tokyo
     services:
       postgres:
         image: postgres:15.3
