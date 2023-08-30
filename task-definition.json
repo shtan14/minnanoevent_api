@@ -37,6 +37,10 @@
                     "value": "minnanoevent.com"
                 },
                 {
+                    "name": "COOKIES_SAME_SITE",
+                    "value": "none"
+                },
+                {
                     "name": "BASE_URL",
                     "value": "https://backend.minnanoevent.com"
                 }
