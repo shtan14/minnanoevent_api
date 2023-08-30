@@ -6,6 +6,8 @@ Rails.application.routes.draw do
         post :refresh, on: :collection
         delete :destroy, on: :collection
       end
+      # healthcheck
+      get "healthcheck", to: "healthcheck#index"
     end
   end
 end
