@@ -10,9 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_24_100703) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_09_061238) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "events", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "title", limit: 255, null: false
+    t.text "description", null: false
+    t.date "event_start_date", null: false
+    t.time "event_start_time", null: false
+    t.date "event_end_date", null: false
+    t.time "event_end_time", null: false
+    t.string "prefecture", null: false
+    t.string "city", null: false
+    t.string "location", limit: 255, null: false
+    t.string "category", limit: 50
+    t.integer "ticket_price"
+    t.integer "average_rating"
+    t.integer "favourites_count"
+    t.integer "comments_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_events_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
@@ -25,4 +46,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_100703) do
     t.string "refresh_jti"
   end
 
+  add_foreign_key "events", "users"
 end
