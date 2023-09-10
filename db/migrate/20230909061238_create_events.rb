@@ -8,14 +8,14 @@ class CreateEvents < ActiveRecord::Migration[7.0]
       t.time :event_start_time, null: false
       t.date :event_end_date, null: false
       t.time :event_end_time, null: false
-      t.string :prefecture, null: false
-      t.string :city, null: false
-      t.string :location, null: false, limit: 255
-      t.string :category, limit: 50
-      t.integer :ticket_price
-      t.integer :average_rating
-      t.integer :favourites_count
-      t.integer :comments_count
+      t.string :prefecture, default: "", null: false
+      t.string :city, default: "", null: false
+      t.string :location, default: "", null: false, limit: 255
+      t.string :category, default: "", null: false, limit: 50
+      t.integer :ticket_price, default: 0, null: false
+      t.integer :average_rating, default: "0.0", null: false
+      t.integer :favourites_count, default: 0, null: false
+      t.integer :comments_count, default: 0, null: false
       t.timestamps
     end
   end
