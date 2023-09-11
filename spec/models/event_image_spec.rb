@@ -1,5 +1,5 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe EventImage, type: :model do
+RSpec.describe EventImage do
   pending "add some examples to (or delete) #{__FILE__}"
 end
