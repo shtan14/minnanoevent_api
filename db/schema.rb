@@ -30,14 +30,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_090259) do
     t.time "event_start_time", null: false
     t.date "event_end_date", null: false
     t.time "event_end_time", null: false
-    t.string "prefecture", null: false
-    t.string "city", null: false
-    t.string "location", limit: 255, null: false
-    t.string "category", limit: 50
-    t.integer "ticket_price"
-    t.integer "average_rating"
-    t.integer "favourites_count"
-    t.integer "comments_count"
+    t.string "prefecture", default: "", null: false
+    t.string "city", default: "", null: false
+    t.string "location", limit: 255, default: "", null: false
+    t.string "category", limit: 50, default: "", null: false
+    t.integer "ticket_price", default: 0, null: false
+    t.integer "average_rating", default: 0, null: false
+    t.integer "favourites_count", default: 0, null: false
+    t.integer "comments_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_events_on_user_id"
