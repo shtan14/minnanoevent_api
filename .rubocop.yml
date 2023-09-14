@@ -25,6 +25,9 @@ Rails:
 Rails/DynamicFindBy:
   Enabled: false
 
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
 # 日本語コメントを許可
 Style/AsciiComments:
   Enabled: false

@@ -18,6 +18,8 @@ class User < ApplicationRecord
                          message: :invalid_password
                        },
                        allow_nil: true
+
+  has_one :user_profile  # UserProfileモデルとの関連付け
 ## methods
   # class method  ###########################
   class << self
