@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_15_233459) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_18_072645) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.bigint "event_id"
+    t.string "category", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_categories_on_event_id"
+  end
 
   create_table "comments", force: :cascade do |t|
     t.bigint "user_id"
@@ -43,7 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_233459) do
     t.string "prefecture", default: "", null: false
     t.string "city", default: "", null: false
     t.string "location", limit: 255, default: "", null: false
-    t.string "category", limit: 50, default: "", null: false
     t.integer "ticket_price", default: 0, null: false
     t.integer "favourites_count", default: 0, null: false
     t.datetime "created_at", null: false
@@ -84,6 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_233459) do
     t.string "refresh_jti"
   end
 
+  add_foreign_key "categories", "events"
   add_foreign_key "comments", "events"
   add_foreign_key "comments", "users"
   add_foreign_key "event_images", "events"
