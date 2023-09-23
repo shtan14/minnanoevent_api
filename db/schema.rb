@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_18_072645) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_23_065955) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,10 +44,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_072645) do
     t.bigint "user_id"
     t.string "title", limit: 255, null: false
     t.text "description", null: false
-    t.date "event_start_date", null: false
-    t.time "event_start_time", null: false
-    t.date "event_end_date", null: false
-    t.time "event_end_time", null: false
     t.string "prefecture", default: "", null: false
     t.string "city", default: "", null: false
     t.string "location", limit: 255, default: "", null: false
@@ -56,6 +52,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_072645) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "phone_number"
+    t.datetime "event_start_datetime", null: false
+    t.datetime "event_end_datetime", null: false
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 

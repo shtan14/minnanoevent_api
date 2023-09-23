@@ -1,0 +1,1 @@
+[{"severity":"convention","location":{"begin_pos":93,"end_pos":141},"message":"Rails/BulkChangeTable: You can use `change_table :events, bulk: true` to combine alter queries.","cop_name":"Rails/BulkChangeTable","status":"unsupported"}]
