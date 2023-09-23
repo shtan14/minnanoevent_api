@@ -704,5 +704,4 @@ event_data.each do |event_info|
     event.categories << category
   end
 end
-
 puts "events = #{Event.count}"
