@@ -703,5 +703,8 @@ event_data.each do |event_info|
     category = Category.find_or_create_by(category: category_name)
     event.categories << category
   end
+
+  event.save
 end
+
 puts "events = #{Event.count}"
