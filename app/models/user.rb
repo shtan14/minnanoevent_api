@@ -20,6 +20,7 @@ class User < ApplicationRecord
                        allow_nil: true
 
   has_one :user_profile  # UserProfileモデルとの関連付け
+  has_many :events
 ## methods
   # class method  ###########################
   class << self
