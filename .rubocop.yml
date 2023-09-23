@@ -13,7 +13,7 @@ AllCops:
   Exclude:
     - "Gemfile"
     - "bin/**/*"
-    - "db/**/*"
+    # - "db/**/*"
     - "log/**/*"
     - "tmp/**/*"
     - "vendor/**/*"

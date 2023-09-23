@@ -1,0 +1,1 @@
+[{"severity":"convention","location":{"begin_pos":83,"end_pos":155},"message":"Rails/ReversibleMigration: change_column is not reversible.","cop_name":"Rails/ReversibleMigration","status":"unsupported"}]
