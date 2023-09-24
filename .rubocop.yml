@@ -13,7 +13,7 @@ AllCops:
   Exclude:
     - "Gemfile"
     - "bin/**/*"
-    # - "db/**/*"
+    - "db/**/*"
     - "log/**/*"
     - "tmp/**/*"
     - "vendor/**/*"
@@ -26,6 +26,9 @@ Rails/DynamicFindBy:
   Enabled: false
 
 Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/HasAndBelongsToMany:
   Enabled: false
 
 # 日本語コメントを許可
