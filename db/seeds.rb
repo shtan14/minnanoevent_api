@@ -1,5 +1,5 @@
 table_names = %w(
-  events
+  comments
 )
 
 table_names.each do |table_name|
