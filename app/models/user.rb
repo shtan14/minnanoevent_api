@@ -21,6 +21,7 @@ class User < ApplicationRecord
 
   has_one :user_profile  # UserProfileモデルとの関連付け
   has_many :events
+  has_many :comments
   has_many :favourites
   has_many :favourite_events, through: :favourites, source: :event
 ## methods
