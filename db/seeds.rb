@@ -1,5 +1,5 @@
 table_names = %w(
-  comments
+  users
 )
 
 table_names.each do |table_name|
