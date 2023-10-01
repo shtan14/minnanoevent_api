@@ -9,7 +9,9 @@ Rails.application.routes.draw do
       # healthcheck
       get "healthcheck", to: "healthcheck#index"
       # events
-      resources :events, only: [:index]
+      resources :events, only: [:index, :show] do
+        resources :event_images, only: [:index]
+      end
     end
   end
 end
