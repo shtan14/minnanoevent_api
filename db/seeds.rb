@@ -1,5 +1,5 @@
 table_names = %w(
-  event_images
+  users
 )
 
 table_names.each do |table_name|
