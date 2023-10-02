@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :events, only: [:index, :show] do
         resources :event_images, only: [:index]
         resources :comments, only: [:index]
+        resources :categories_events, only: [:create, :destroy]
       end
     end
   end
