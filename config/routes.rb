@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       end
       # healthcheck
       get "healthcheck", to: "healthcheck#index"
+      resources :categories, only: [:index]
       # events
       resources :events, only: [:index, :show] do
         resources :event_images, only: [:index]
