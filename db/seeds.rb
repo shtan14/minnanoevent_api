@@ -13,8 +13,7 @@ table_names.each do |table_name|
 end
 
 # users
-# events
 # user_profiles
+# events
 # event_images
-# favourites
 # comments
