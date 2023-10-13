@@ -1,5 +1,5 @@
 table_names = %w(
-  user_profiles
+  events
 )
 
 table_names.each do |table_name|
