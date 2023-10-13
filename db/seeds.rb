@@ -1,6 +1,7 @@
 table_names = %w(
   events
   event_images
+  comments
 )
 
 table_names.each do |table_name|
