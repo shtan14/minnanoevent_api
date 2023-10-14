@@ -1,4 +1,6 @@
 table_names = %w(
+  users
+  user_profiles
   events
   event_images
   comments
