@@ -7,7 +7,7 @@ class Api::V1::EventsController < ApplicationController
   end
 
   def show
-    event = Event.includes(:categories).find(params[:id])
-    render json: event, include: "categories"
+    event = Event.includes(:categories, :event_images).find(params[:id])
+    render json: event, include: [:categories, :event_images]
   end
 end
