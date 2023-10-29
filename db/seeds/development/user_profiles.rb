@@ -21,7 +21,7 @@ User.all.each_with_index do |user, index|
   UserProfile.create!(
     user_id: user.id,
     bio: bios.sample,
-    avatar: "avatar_#{avatar_image_number}.jpg",
+    avatar: "https://s3.ap-northeast-1.amazonaws.com/minnanoevent.com/avatar/avatar_#{avatar_image_number}.jpg",
     x_link: "",
     facebook_link: "",
     instagram_link: "",
