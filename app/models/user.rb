@@ -49,7 +49,8 @@ class User < ApplicationRecord
   end
 
   def response_json(payload = {})
-    as_json(only: %i[id name]).merge(payload).with_indifferent_access
+    as_json(only: %i[id name], include: { user_profile: { only: :avatar } })
+  .merge(payload).with_indifferent_access
   end
 
   private
