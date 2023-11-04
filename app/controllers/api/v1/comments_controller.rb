@@ -5,11 +5,10 @@ class Api::V1::CommentsController < ApplicationController
     event = Event.find(params[:event_id])
     comments = event.comments.includes(user: :user_profile)
 
-    # コメントに関連するユーザーの名前とアバター、そしてuser_idを含めたJSONデータを生成
     comments_json = comments.as_json(
       include: {
         user: {
-          only: [:id, :name], # user_idとしてユーザーのidを含める
+          only: [:id, :name], 
           include: {
             user_profile: {
               only: [:avatar]
