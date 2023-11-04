@@ -3,7 +3,22 @@ class Api::V1::CommentsController < ApplicationController
   skip_before_action :xhr_request?, only: [:index]
   def index
     event = Event.find(params[:event_id])
-    comments = event.comments
-    render json: comments
+    comments = event.comments.includes(user: :user_profile)
+
+    # コメントに関連するユーザーの名前とアバター、そしてuser_idを含めたJSONデータを生成
+    comments_json = comments.as_json(
+      include: {
+        user: {
+          only: [:id, :name], # user_idとしてユーザーのidを含める
+          include: {
+            user_profile: {
+              only: [:avatar]
+            }
+          }
+        }
+      }
+    )
+
+    render json: comments_json
   end
 end
