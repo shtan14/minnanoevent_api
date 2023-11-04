@@ -1,5 +1,9 @@
 table_names = %w(
+  users
   user_profiles
+  events
+  event_images
+  comments
 )
 
 table_names.each do |table_name|
@@ -11,9 +15,3 @@ table_names.each do |table_name|
   puts "#{table_name}..."
   require path
 end
-
-# users
-# user_profiles
-# events
-# event_images
-# comments

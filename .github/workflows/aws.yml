@@ -52,8 +52,8 @@ jobs:
           bundle exec rails db:create
           bundle exec rails db:migrate
 
-      # - name: Run rspec
-      #   run: bundle exec rspec
+      - name: Run rspec
+        run: bundle exec rspec
 
   deploy:
     name: Deploy
