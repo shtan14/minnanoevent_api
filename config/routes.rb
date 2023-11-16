@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       get "healthcheck", to: "healthcheck#index"
       resources :categories, only: [:index, :show]
       # users
-      resources :users, only: [:show]
+      resources :users, only: [:show, :create]
       # events
       resources :events, only: [:index, :show] do
         resources :event_images, only: [:index]
