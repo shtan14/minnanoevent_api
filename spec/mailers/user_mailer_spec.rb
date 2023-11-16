@@ -11,7 +11,7 @@ RSpec.describe UserMailer, type: :mailer do
       expect(mail.subject).to eq("【みんなのイベント】アカウント認証をお願いします")
       expect(mail.to).to eq([demo_user.email])
       # TODO: 本番では消去
-      expect(mail.from).to eq(["wrzn.inw.snun@gmail.com"])
+      expect(mail.from).to eq(["example@example.com"])
     end
 
     it "メールの本文表記が適切であること" do
