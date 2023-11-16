@@ -3,6 +3,7 @@ class UserMailer < ApplicationMailer
     @user = user
     mail to: user.email, subject: "【みんなのイベント】アカウント認証をお願いします"
   end
+
   def password_reset
     @greeting = "Hi"
 

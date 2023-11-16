@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe UserMailer, type: :mailer do
+RSpec.describe UserMailer do
   describe "account_activation" do
     let(:mail) { UserMailer.account_activation }
 
@@ -28,5 +28,4 @@ RSpec.describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to match("Hi")
     end
   end
-
 end

@@ -7,11 +7,11 @@ class Favourite < ApplicationRecord
 
   private
 
-  def increment_favourites_count
-    event.increment!(:favourites_count)
-  end
+    def increment_favourites_count
+      event.increment!(:favourites_count)
+    end
 
-  def decrement_favourites_count
-    event.decrement!(:favourites_count)
-  end
+    def decrement_favourites_count
+      event.decrement!(:favourites_count)
+    end
 end
