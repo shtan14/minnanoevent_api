@@ -19,4 +19,5 @@ Rails.application.routes.draw do
       end
     end
   end
+  get 'account_activations/:id/edit', to: 'account_activations#edit', as: 'edit_account_activation'
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_24_042110) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_16_031719) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,6 +95,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_24_042110) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "refresh_jti"
+    t.string "activation_digest"
+    t.datetime "activated_at"
   end
 
   add_foreign_key "categories_events", "categories"
