@@ -20,4 +20,7 @@ Rails.application.routes.draw do
     end
   end
   get "account_activations/:id/edit", to: "account_activations#edit", as: "edit_account_activation"
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
 end

@@ -1,8 +1,7 @@
 require "rails_helper"
 require "spec_helper"
 
-
-RSpec.describe UserMailer, type: :mailer do
+RSpec.describe UserMailer do
   describe "アカウント認証メール" do
     let(:demo_user) { create(:demo_user) }  # デモユーザーを作成
     let(:mail) { UserMailer.account_activation(demo_user) }
@@ -15,8 +14,8 @@ RSpec.describe UserMailer, type: :mailer do
     end
 
     it "メールの本文表記が適切であること" do
-      html_part = mail.body.parts.find { |p| p.content_type.match /html/ }
-      text_part = mail.body.parts.find { |p| p.content_type.match /plain/ }
+      html_part = mail.body.parts.find { |p| p.content_type.include?("html") }
+      text_part = mail.body.parts.find { |p| p.content_type.include?("plain") }
       expect(html_part.body.decoded).to match(demo_user.name)
       expect(text_part.body.decoded).to match(demo_user.name)
       expect(html_part.body.decoded).to match(demo_user.activation_token)
