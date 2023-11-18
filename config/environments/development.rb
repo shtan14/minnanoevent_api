@@ -40,7 +40,7 @@ Rails.application.configure do
 
   config.log_level = :debug
 
-  host = "localhost" # ローカル環境
+  host = "localhost:8080" # ローカル環境
   config.action_mailer.default_url_options = { host:, protocol: "http" }
 
   config.action_mailer.perform_caching = false
