@@ -67,6 +67,10 @@
                 {
                     "name": "DATABASE_URL",
                     "valueFrom": "myapp_database_url"
+                },
+                {
+                    "name": "MAILGUN_SMTP_PASSWORD",
+                    "valueFrom": "mailgun_smtp_password"
                 }
             ],
             "ulimits": [],

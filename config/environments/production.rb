@@ -59,6 +59,17 @@ Rails.application.configure do
   host = "minnanoevent.com"
   config.action_mailer.default_url_options = { host:, protocol: "https" }
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "smtp.mailgun.org",
+    port: 587,
+    domain: "mg.minnanoevent.com",
+    user_name: "postmaster@mg.minnanoevent.com",
+    password: ENV.fetch("MAILGUN_SMTP_PASSWORD"),
+    authentication: "plain",
+    enable_starttls_auto: true
+  }
+
   config.action_mailer.perform_caching = false
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
