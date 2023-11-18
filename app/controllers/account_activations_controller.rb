@@ -6,7 +6,7 @@ class AccountActivationsController < ApplicationController
       user.update(activated: true, activated_at: Time.zone.now)
       render json: { message: "アカウントが有効になりました。ログインをお願いいたします。", redirect_url: "/login" }, status: :ok
     else
-      render json: { error: "無効なアクティベーションリンクです。" }, status: :unprocessable_entity
+      render json: { error: "無効なアクティベーションリンクです。", redirect_url: "/login" }, status: :unprocessable_entity
     end
   end
 end
