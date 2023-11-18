@@ -2,7 +2,10 @@ require "validator/email_validator"
 
 class User < ApplicationRecord
   include TokenGenerateService
+  attr_accessor :activation_token
+
   before_validation :downcase_email
+  before_create :create_activation_digest
   has_secure_password
 
   validates :name, presence: true,
@@ -50,7 +53,14 @@ class User < ApplicationRecord
 
   def response_json(payload = {})
     as_json(only: %i[id name], include: { user_profile: { only: :avatar } })
-  .merge(payload).with_indifferent_access
+      .merge(payload).with_indifferent_access
+  end
+
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+
+    BCrypt::Password.new(digest).is_password?(token)
   end
 
   private
@@ -58,5 +68,26 @@ class User < ApplicationRecord
   # email小文字化
     def downcase_email
       email&.downcase!
+    end
+
+    def create_activation_digest
+      self.activation_token  = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end
+
+    class << self
+      def User.new_token
+        SecureRandom.urlsafe_base64
+      end
+
+      # 与えられた文字列のダイジェストを返すクラスメソッド
+      def User.digest(string)
+        cost = if ActiveModel::SecurePassword.min_cost
+                 BCrypt::Engine::MIN_COST
+               else
+                 BCrypt::Engine.cost
+               end
+        BCrypt::Password.create(string, cost:)
+      end
     end
 end

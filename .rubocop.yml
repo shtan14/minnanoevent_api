@@ -31,6 +31,9 @@ Rails/HasManyOrHasOneDependent:
 Rails/HasAndBelongsToMany:
   Enabled: false
 
+Rails/I18nLocaleTexts:
+  Enabled: false
+
 # 日本語コメントを許可
 Style/AsciiComments:
   Enabled: false

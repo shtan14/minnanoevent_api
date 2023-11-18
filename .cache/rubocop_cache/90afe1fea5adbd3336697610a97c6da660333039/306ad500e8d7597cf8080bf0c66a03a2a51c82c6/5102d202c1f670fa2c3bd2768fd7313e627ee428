@@ -1,0 +1,1 @@
+[{"severity":"convention","location":{"begin_pos":98,"end_pos":152},"message":"Rails/LexicallyScopedActionFilter: `index` is not explicitly defined on the class.","cop_name":"Rails/LexicallyScopedActionFilter","status":"unsupported"}]

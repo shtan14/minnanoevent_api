@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :comment do
-    # todo
+    # TODO: todo
   end
 end

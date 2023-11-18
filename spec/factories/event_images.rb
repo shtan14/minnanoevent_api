@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :event_image do
-    # todo
+    # TODO: todo
   end
 end

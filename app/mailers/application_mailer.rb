@@ -1,4 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"
+  # TODO: 環境変数にするか消去
+  default from: "example@example.com"
   layout "mailer"
 end

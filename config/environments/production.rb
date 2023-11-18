@@ -8,7 +8,6 @@ Rails.application.configure do
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
-  # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
 
@@ -57,6 +56,10 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  host = "minnanoevent.com"
+  config.action_mailer.default_url_options = { host:, protocol: "https" }
+
+  config.action_mailer.perform_caching = false
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
