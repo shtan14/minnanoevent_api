@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      get "account_activations/:id/edit", to: "account_activations#edit", as: "edit_account_activation"
       resources :auth_token, only: [:create] do
         post :refresh, on: :collection
         delete :destroy, on: :collection
@@ -16,6 +15,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  get "account_activations/:id/edit", to: "account_activations#edit", as: "edit_account_activation"
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end

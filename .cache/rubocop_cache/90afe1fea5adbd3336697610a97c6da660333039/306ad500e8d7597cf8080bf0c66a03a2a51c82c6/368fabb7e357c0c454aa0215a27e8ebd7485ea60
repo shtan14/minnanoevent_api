@@ -1,0 +1,1 @@
+[{"severity":"convention","location":{"begin_pos":396,"end_pos":404},"message":"Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.","cop_name":"Style/StringLiterals","status":"uncorrected"}]

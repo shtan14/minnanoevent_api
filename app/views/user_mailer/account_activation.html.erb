@@ -4,4 +4,4 @@
 ご登録ありがとうございます。下記をクリックしてアカウント認証を行ってください。
 </p>
 
-<%= link_to "アカウント認証", api_v1_edit_account_activation_url(@user.activation_token, email: @user.email) %>
+<%= link_to "アカウント認証", edit_account_activation_url(@user.activation_token, email: @user.email) %>
