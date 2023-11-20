@@ -5,9 +5,17 @@ Rails.application.routes.draw do
         post :refresh, on: :collection
         delete :destroy, on: :collection
       end
+
       get "healthcheck", to: "healthcheck#index"
+
       resources :categories, only: %i[index show]
-      resources :users, only: %i[show create]
+
+      resources :users, only: %i[show create] do
+        collection do
+          delete :destroy
+        end
+      end
+
       resources :events, only: %i[index show] do
         resources :event_images, only: [:index]
         resources :comments, only: [:index]
