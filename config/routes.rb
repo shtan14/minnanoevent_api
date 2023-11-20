@@ -11,7 +11,9 @@ Rails.application.routes.draw do
       resources :categories, only: %i[index show]
 
       resources :users, only: %i[show create] do
-        delete :destroy, on: :member
+        collection do
+          delete :destroy
+        end
       end
 
       resources :events, only: %i[index show] do
