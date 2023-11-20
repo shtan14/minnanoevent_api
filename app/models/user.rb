@@ -22,10 +22,10 @@ class User < ApplicationRecord
                        },
                        allow_nil: true
 
-  has_one :user_profile  # UserProfileモデルとの関連付け
-  has_many :events
-  has_many :comments
-  has_many :favourites
+  has_one :user_profile, dependent: :destroy
+  has_many :events, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :favourites, dependent: :destroy
   has_many :favourite_events, through: :favourites, source: :event
 ## methods
   # class method  ###########################
