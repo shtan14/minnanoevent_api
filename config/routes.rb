@@ -14,7 +14,12 @@ Rails.application.routes.draw do
         collection do
           delete :destroy
         end
+        member do
+          patch :update
+        end
       end
+
+      resource :user_profiles, only: %i[show update]
 
       resources :events, only: %i[index show] do
         resources :event_images, only: [:index]
