@@ -1,5 +1,5 @@
 class Api::V1::UserProfilesController < ApplicationController
-  skip_before_action :xhr_request?, only: %i[show update]
+  # skip_before_action :xhr_request?, only: %i[show update]
   before_action :authenticate_user, only: [:update]
 
   def show
@@ -8,7 +8,7 @@ class Api::V1::UserProfilesController < ApplicationController
   end
 
   def update
-    profile = current_user.user_profile
+    profile = current_user.user_profile || current_user.build_user_profile
     if profile&.update(profile_params)
       render json: profile
     else
