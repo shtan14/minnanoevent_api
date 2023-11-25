@@ -8,13 +8,20 @@ Rails.application.routes.draw do
 
       get "healthcheck", to: "healthcheck#index"
 
+      post "s3/sign", to: "s3_signatures#create"
+
       resources :categories, only: %i[index show]
 
       resources :users, only: %i[show create] do
         collection do
           delete :destroy
         end
+        member do
+          patch :update
+        end
       end
+
+      resource :user_profiles, only: %i[show update]
 
       resources :events, only: %i[index show] do
         resources :event_images, only: [:index]
