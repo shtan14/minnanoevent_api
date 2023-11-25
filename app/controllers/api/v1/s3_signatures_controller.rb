@@ -1,6 +1,8 @@
 class Api::V1::S3SignaturesController < ApplicationController
   require "aws-sdk-s3"
 
+  before_action :authenticate_user
+
   def create
     filename = params[:filename]
     content_type = params[:contentType]
