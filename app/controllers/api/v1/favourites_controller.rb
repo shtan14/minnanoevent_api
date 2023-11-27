@@ -13,7 +13,7 @@ class Api::V1::FavouritesController < ApplicationController
   end
 
   def destroy
-    favourite = current_user.favourites.find_by(event_id: params[:id])
+    favourite = current_user.favourites.find_by(id: params[:id])
     if favourite&.destroy
       head :no_content
     else
