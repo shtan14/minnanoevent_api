@@ -3,6 +3,11 @@ class Api::V1::FavouritesController < ApplicationController
   skip_before_action :xhr_request?, only: %i[create destroy]
   before_action :authenticate_user
 
+  def index
+    favourites = current_user.favourites
+    render json: favourites
+  end
+
   def create
     favourite = current_user.favourites.build(event_id: params[:event_id])
     if favourite.save
