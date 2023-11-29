@@ -8,10 +8,12 @@ class Favourite < ApplicationRecord
   private
 
     def increment_favourites_count
-      event.increment!(:favourites_count)
+      event.favourites_count = event.favourites_count + 1
+      event.save
     end
 
     def decrement_favourites_count
-      event.decrement!(:favourites_count)
+      event.favourites_count = event.favourites_count - 1
+      event.save
     end
 end
