@@ -15,12 +15,17 @@ class Api::V1::EventsController < ApplicationController
 
   private
 
-    # クエリパラメータにuser_idがある場合は、そのユーザーに紐づくイベントのみを取得
     def fetch_events
+      base_query = Event.includes(:categories, :event_images)
       if params[:user_id]
-        Event.includes(:categories, :event_images).where(user_id: params[:user_id])
+        # 特定のユーザーに紐づくイベントのみを取得
+        base_query.where(user_id: params[:user_id])
+                  .where("event_start_datetime >= ?", Time.zone.now)
+                  .order(event_start_datetime: :asc)
       else
-        Event.includes(:categories, :event_images).all
+        # 開始日時が近い順に全イベントを取得
+        base_query.where("event_start_datetime >= ?", Time.zone.now)
+                  .order(event_start_datetime: :asc)
       end
     end
 
