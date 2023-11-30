@@ -23,7 +23,7 @@ class Api::V1::EventsController < ApplicationController
                   .where("event_start_datetime >= ?", Time.zone.now)
                   .order(event_start_datetime: :asc)
       else
-        # 開始日時が現在または未来で、開始日時が近い順に全イベントを取得
+        # 開始日時が近い順に全イベントを取得
         base_query.where("event_start_datetime >= ?", Time.zone.now)
                   .order(event_start_datetime: :asc)
       end
