@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
       resources :events, only: %i[index show] do
         resources :event_images, only: [:index]
-        resources :comments, only: [:index]
+        resources :comments, only: %i[index create]
         resources :categories_events, only: %i[create destroy]
       end
 
