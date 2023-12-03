@@ -1,7 +1,7 @@
 class Api::V1::CommentsController < ApplicationController
   # TODO: 開発時xhr_request?を無効化。最後は有効化させる。
   skip_before_action :xhr_request?, only: %i[create index]
-  before_action :authenticate_user, only: [:create]
+  before_action :authenticate_user, only: %i[create destroy]
 
   def index
     event = Event.find(params[:event_id])
@@ -30,6 +30,15 @@ class Api::V1::CommentsController < ApplicationController
       render json: comment, status: :created
     else
       render json: { errors: comment.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    comment = Comment.find(params[:id])
+    if comment.destroy
+      head :no_content
+    else
+      render json: { error: "コメントの削除に失敗しました" }, status: :unprocessable_entity
     end
   end
 
