@@ -30,6 +30,8 @@ Rails.application.routes.draw do
       end
 
       resources :favourites, only: %i[index create destroy]
+
+      resources :comments, only: [:destroy]
     end
   end
   get "account_activations/:id/edit", to: "account_activations#edit", as: "edit_account_activation"
