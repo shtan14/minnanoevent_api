@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
       resource :user_profiles, only: %i[show update]
 
-      resources :events, only: %i[index show] do
+      resources :events, only: %i[index show create] do
         resources :event_images, only: [:index]
         resources :comments, only: %i[index create]
         resources :categories_events, only: %i[create destroy]
