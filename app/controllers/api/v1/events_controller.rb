@@ -1,7 +1,7 @@
 class Api::V1::EventsController < ApplicationController
   # TODO: 開発時xhr_request?を無効化。最後は有効化させる。
   skip_before_action :xhr_request?, only: %i[index show]
-  before_action :authenticate_user, only: [:create]
+  before_action :authenticate_user, only: %i[create destroy]
 
   def index
     events = fetch_events
@@ -26,6 +26,17 @@ class Api::V1::EventsController < ApplicationController
     render json: @event, status: :created
   rescue ActiveRecord::RecordInvalid => e
     render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+  end
+
+  def destroy
+    event = Event.find(params[:id])
+    # イベントの所有者かどうかをチェック
+    if event.user == current_user
+      event.destroy
+      render json: { message: "イベントが削除されました。" }, status: :ok
+    else
+      render json: { errors: ["削除権限がありません。"] }, status: :forbidden
+    end
   end
 
   private
