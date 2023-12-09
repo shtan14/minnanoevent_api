@@ -47,11 +47,11 @@ class Api::V1::EventsController < ApplicationController
       if params[:user_id]
         # 特定のユーザーに紐づくイベントのみを取得
         base_query.where(user_id: params[:user_id])
-                  .where("event_start_datetime >= ?", Time.zone.now)
+                  .where("event_start_datetime >= ?", Time.zone.now.beginning_of_day)
                   .order(event_start_datetime: :asc)
       else
         # 開始日時が近い順に全イベントを取得
-        base_query.where("event_start_datetime >= ?", Time.zone.now)
+        base_query.where("event_start_datetime >= ?", Time.zone.now.beginning_of_day)
                   .order(event_start_datetime: :asc)
       end
     end
