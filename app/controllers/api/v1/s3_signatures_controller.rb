@@ -6,24 +6,31 @@ class Api::V1::S3SignaturesController < ApplicationController
   def create
     filename = params[:filename]
     content_type = params[:contentType]
+    image_type = params[:imageType]
 
-    signed_url, public_url = generate_presigned_url(filename, content_type)
+    signed_url, public_url = generate_presigned_url(filename, content_type, image_type)
 
     render json: { signedUrl: signed_url, publicUrl: public_url }
   end
 
   private
 
-    def generate_presigned_url(filename, content_type)
+    def generate_presigned_url(filename, content_type, image_type)
+      s3_path = if image_type == "event"
+                  "eventimage/#{filename}"
+                else
+                  "avatarimage/#{filename}"
+                end
+
       presigner = initialize_presigner
       signed_url = presigner.presigned_url(
         :put_object,
         bucket: "minnanoevent.com",
-        key: "avatarimage/#{filename}",
+        key: s3_path,
         content_type:,
         expires_in: 300
       )
-      public_url = "https://s3.ap-northeast-1.amazonaws.com/minnanoevent.com/avatarimage/#{filename}"
+      public_url = "https://s3.ap-northeast-1.amazonaws.com/minnanoevent.com/#{s3_path}"
       [signed_url, public_url]
     end
 

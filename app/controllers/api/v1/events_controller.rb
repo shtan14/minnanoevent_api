@@ -1,6 +1,7 @@
 class Api::V1::EventsController < ApplicationController
   # TODO: 開発時xhr_request?を無効化。最後は有効化させる。
   skip_before_action :xhr_request?, only: %i[index show]
+  before_action :authenticate_user, only: [:create]
 
   def index
     events = fetch_events
@@ -13,18 +14,44 @@ class Api::V1::EventsController < ApplicationController
     render json: formatted_event, include: %i[categories event_images]
   end
 
+  def create
+    ActiveRecord::Base.transaction do
+      @event = current_user.events.build(event_params)
+      @event.save!
+
+      save_event_images(@event) if params[:image_urls].present?
+      assign_categories(@event) if params[:category_ids].present?
+    end
+
+    render json: @event, status: :created
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+  end
+
   private
+
+    def save_event_images(event)
+      params[:image_urls].each do |url|
+        event.event_images.create!(event_image: url)
+      end
+    end
+
+    def assign_categories(event)
+      params[:category_ids].each do |category_id|
+        event.categories << Category.find(category_id)
+      end
+    end
 
     def fetch_events
       base_query = Event.includes(:categories, :event_images)
       if params[:user_id]
-        # 特定のユーザーに紐づくイベントのみを取得
+        # 特定のユーザーに紐づくイベントのみを取得 開始日が本日のイベントは全部取得
         base_query.where(user_id: params[:user_id])
-                  .where("event_start_datetime >= ?", Time.zone.now)
+                  .where("event_start_datetime >= ?", Time.zone.now.beginning_of_day)
                   .order(event_start_datetime: :asc)
       else
-        # 開始日時が近い順に全イベントを取得
-        base_query.where("event_start_datetime >= ?", Time.zone.now)
+        # 開始日時が近い順に全イベントを取得 開始日が本日のイベントは全部取得
+        base_query.where("event_start_datetime >= ?", Time.zone.now.beginning_of_day)
                   .order(event_start_datetime: :asc)
       end
     end
@@ -47,5 +74,10 @@ class Api::V1::EventsController < ApplicationController
         isFavourite: event.favourite_for?(current_user),
         favouriteId: event.favourite_id_for(current_user)
       )
+    end
+
+    def event_params
+      # 適切なパラメータを許可
+      params.require(:event).permit(:title, :description, :prefecture, :city, :location, :ticket_price, :phone_number, :event_start_datetime, :event_end_datetime, image_urls: [], category_ids: [])
     end
 end
