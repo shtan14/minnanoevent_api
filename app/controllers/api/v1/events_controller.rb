@@ -1,7 +1,7 @@
 class Api::V1::EventsController < ApplicationController
   # TODO: 開発時xhr_request?を無効化。最後は有効化させる。
   skip_before_action :xhr_request?, only: %i[index show]
-  before_action :authenticate_user, only: %i[create destroy]
+  before_action :authenticate_user, only: %i[create destroy update]
 
   def index
     events = fetch_events
@@ -24,6 +24,30 @@ class Api::V1::EventsController < ApplicationController
     end
 
     render json: @event, status: :created
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+  end
+
+  def update
+    event = Event.find(params[:id])
+
+    # イベントの所有者かどうかをチェック
+    if event.user != current_user
+      return render json: { errors: ["更新権限がありません。"] }, status: :forbidden
+    end
+
+    ActiveRecord::Base.transaction do
+      event.update!(event_params)
+
+      # 画像を更新（既存の画像を削除し、新しいURLを保存）
+      event.event_images.destroy_all
+      save_event_images(event) if params[:image_urls].present?
+      # カテゴリーを更新
+      event.categories.destroy_all
+      assign_categories(event) if params[:category_ids].present?
+    end
+
+    render json: event, include: %i[categories event_images], status: :ok
   rescue ActiveRecord::RecordInvalid => e
     render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
   end
