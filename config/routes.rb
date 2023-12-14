@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :auth_token, only: [:create] do
         post :refresh, on: :collection
         delete :destroy, on: :collection
+        post :easy_login, on: :collection
       end
 
       get "healthcheck", to: "healthcheck#index"

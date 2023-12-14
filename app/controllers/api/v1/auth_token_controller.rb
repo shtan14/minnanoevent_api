@@ -20,6 +20,20 @@ class Api::V1::AuthTokenController < ApplicationController
     render json: login_response
   end
 
+  # かんたんログイン
+  def easy_login
+    # is_guest_userがtrueのユーザー
+    guest_user = User.find_by(is_guest_user: true)
+
+    if guest_user
+      @user = guest_user
+      set_refresh_token_to_cookie
+      render json: login_response
+    else
+      render json: { error: "guest user not found" }, status: :not_found
+    end
+  end
+
   # リフレッシュ
   def refresh
     @user = session_user
