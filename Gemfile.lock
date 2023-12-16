@@ -118,6 +118,18 @@ GEM
     jmespath (1.6.2)
     json (2.6.3)
     jwt (2.7.1)
+    kaminari (1.2.2)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.2)
+      kaminari-activerecord (= 1.2.2)
+      kaminari-core (= 1.2.2)
+    kaminari-actionview (1.2.2)
+      actionview
+      kaminari-core (= 1.2.2)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     launchy (2.5.2)
       addressable (~> 2.8)
     letter_opener (1.8.1)
@@ -270,6 +282,7 @@ DEPENDENCIES
   hirb (~> 0.7.3)
   hirb-unicode-steakknife (~> 0.0.9)
   jwt (~> 2.7, >= 2.7.1)
+  kaminari
   letter_opener_web
   pg (~> 1.1)
   puma (~> 5.0)
