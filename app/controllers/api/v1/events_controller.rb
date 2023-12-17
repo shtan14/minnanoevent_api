@@ -78,17 +78,21 @@ class Api::V1::EventsController < ApplicationController
     end
 
     def fetch_events
+      per_page = 10 # 1ページあたりのイベント数を設定
+      page = params[:page] || 1 # ページ番号が指定されていなければ1ページ目とする
       base_query = Event.includes(:categories, :event_images)
-      if params[:user_id]
+      base_query = if params[:user_id]
         # 特定のユーザーに紐づくイベントのみを取得 開始日が本日のイベントは全部取得
-        base_query.where(user_id: params[:user_id])
-                  .where("event_start_datetime >= ?", Time.zone.now.beginning_of_day)
-                  .order(event_start_datetime: :asc)
-      else
+                     base_query.where(user_id: params[:user_id])
+                               .where("event_start_datetime >= ?", Time.zone.now.beginning_of_day)
+                               .order(event_start_datetime: :asc)
+                   else
         # 開始日時が近い順に全イベントを取得 開始日が本日のイベントは全部取得
-        base_query.where("event_start_datetime >= ?", Time.zone.now.beginning_of_day)
-                  .order(event_start_datetime: :asc)
-      end
+                     base_query.where("event_start_datetime >= ?", Time.zone.now.beginning_of_day)
+                               .order(event_start_datetime: :asc)
+                   end
+      # Kaminariを使用してページネーションを適用
+      base_query.page(page).per(per_page)
     end
 
     # カテゴリー、イベントイメージ、isFavourite、favouriteIdを含んだ全件イベントデータを取得
