@@ -64,36 +64,35 @@ class Api::V1::EventsController < ApplicationController
   end
 
   def search
-    # キーワードと日付のパラメータを取得
     keyword = params[:keyword].present? ? params[:keyword].downcase : nil
     date = params[:date].presence
 
-    # イベントを検索
-    events = Event.includes(:categories, :event_images)
+    # キーワードによるイベントIDの検索
+    event_ids = Event.joins(:categories)
+                     .where("
+                       lower(events.title) LIKE :keyword OR
+                       lower(events.description) LIKE :keyword OR
+                       lower(events.prefecture) LIKE :keyword OR
+                       lower(events.city) LIKE :keyword OR
+                       lower(events.location) LIKE :keyword OR
+                       lower(categories.category) LIKE :keyword",
+                            keyword: "%#{keyword}%")
+                     .distinct
+                     .pluck(:id)
 
-    if keyword.present?
-      # キーワードを使ってイベントを検索
-      events = events.joins(:categories).where("
-        lower(events.title) LIKE :keyword OR
-        lower(events.description) LIKE :keyword OR
-        lower(events.prefecture) LIKE :keyword OR
-        lower(events.city) LIKE :keyword OR
-        lower(events.location) LIKE :keyword OR
-        lower(categories.category) LIKE :keyword",
-                                               keyword: "%#{keyword}%").distinct
-    end
+    # イベントIDに基づいて全データを取得
+    events = Event.includes(:categories, :event_images)
+                  .where(id: event_ids)
 
     if date.present?
       begin
         parsed_date = Date.parse(date)
-        events = events.where("DATE(event_start_datetime) = ?", parsed_date)
+        events = events.where(event_start_datetime: parsed_date.all_day)
       rescue ArgumentError
-        # 無効な日付の場合の処理（例：エラーメッセージを返す）
         return render json: { error: "Invalid date format" }, status: :bad_request
       end
     end
 
-    # レスポンスとしてイベントを返す
     render json: format_events(events), include: %i[categories event_images]
   end
 
