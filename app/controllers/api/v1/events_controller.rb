@@ -63,6 +63,30 @@ class Api::V1::EventsController < ApplicationController
     end
   end
 
+  def search
+    keyword = params[:keyword].present? ? params[:keyword].downcase : nil
+    date = params[:date].presence
+
+    # キーワードによるイベントIDの検索
+    event_ids = search_event_ids_by_keyword(keyword)
+
+    # イベントIDに基づいて全データを取得
+    events = Event.includes(:categories, :event_images)
+                  .where(id: event_ids)
+
+    if date.present?
+      begin
+        parsed_date = Date.parse(date)
+        events = events.where(event_start_datetime: parsed_date.all_day)
+      rescue ArgumentError
+        return render json: { error: "Invalid date format" }, status: :bad_request
+      end
+    end
+    # イベントを開始日時が早い順に並べ替え
+    events = events.order(event_start_datetime: :asc)
+    render json: format_events(events), include: %i[categories event_images]
+  end
+
   private
 
     def save_event_images(event)
@@ -118,5 +142,20 @@ class Api::V1::EventsController < ApplicationController
     def event_params
       # 適切なパラメータを許可
       params.require(:event).permit(:title, :description, :prefecture, :city, :location, :ticket_price, :phone_number, :event_start_datetime, :event_end_datetime, image_urls: [], category_ids: [])
+    end
+
+    # キーワードによるイベントIDの検索
+    def search_event_ids_by_keyword(keyword)
+      Event.joins(:categories)
+           .where("
+          lower(events.title) LIKE :keyword OR
+          lower(events.description) LIKE :keyword OR
+          lower(events.prefecture) LIKE :keyword OR
+          lower(events.city) LIKE :keyword OR
+          lower(events.location) LIKE :keyword OR
+          lower(categories.category) LIKE :keyword",
+                  keyword: "%#{keyword}%")
+           .distinct
+           .pluck(:id)
     end
 end

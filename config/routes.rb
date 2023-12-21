@@ -24,6 +24,9 @@ Rails.application.routes.draw do
 
       resource :user_profiles, only: %i[show update]
 
+      # resources :eventsブロックの前に記載
+      get "events/search", to: "events#search"
+
       resources :events, only: %i[index show create update destroy] do
         resources :event_images, only: [:index]
         resources :comments, only: %i[index create]
