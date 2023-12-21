@@ -92,7 +92,8 @@ class Api::V1::EventsController < ApplicationController
         return render json: { error: "Invalid date format" }, status: :bad_request
       end
     end
-
+    # イベントを開始日時が早い順に並べ替え
+    events = events.order(event_start_datetime: :asc)
     render json: format_events(events), include: %i[categories event_images]
   end
 
