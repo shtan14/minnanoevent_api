@@ -27,4 +27,8 @@ module UserHelpers
   def res_body
     JSON.parse(@response.body)
   end
+
+  def json
+    JSON.parse(response.body)
+  end
 end

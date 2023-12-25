@@ -3,5 +3,10 @@ FactoryBot.define do
     name { "テストユーザー" }
     email { "test@example.com" }
     password { "password" }
+    activated { true }
+
+    after(:create) do |user|
+      create(:user_profile, user:)
+    end
   end
 end
