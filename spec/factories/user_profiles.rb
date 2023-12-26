@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :user_profile do
+    association :user, factory: :demo_user
     bio { "test_bio" }
     avatar { "test_avatar" }
     x_link { "test_x_link" }

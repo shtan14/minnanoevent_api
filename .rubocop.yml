@@ -192,3 +192,6 @@ Rails/FilePath:
 
 Naming/MemoizedInstanceVariableName:
   Enabled: false
+
+FactoryBot/AssociationStyle:
+  Enabled: false

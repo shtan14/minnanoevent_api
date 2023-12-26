@@ -8,13 +8,13 @@ RSpec.describe "Api::V1::Users" do
       get "/api/v1/users/#{user.id}"
       expect(response).to have_http_status(:success)
 
-      expect(json["name"]).to eq(user.name)
-      expect(json["email"]).to eq(user.email)
-      expect(json["user_profile"]["bio"]).to eq(user.user_profile.bio)
-      expect(json["user_profile"]["avatar"]).to eq(user.user_profile.avatar)
-      expect(json["user_profile"]["x_link"]).to eq(user.user_profile.x_link)
-      expect(json["user_profile"]["facebook_link"]).to eq(user.user_profile.facebook_link)
-      expect(json["user_profile"]["instagram_link"]).to eq(user.user_profile.instagram_link)
+      expect(res_body["name"]).to eq(user.name)
+      expect(res_body["email"]).to eq(user.email)
+      expect(res_body["user_profile"]["bio"]).to eq(user.user_profile.bio)
+      expect(res_body["user_profile"]["avatar"]).to eq(user.user_profile.avatar)
+      expect(res_body["user_profile"]["x_link"]).to eq(user.user_profile.x_link)
+      expect(res_body["user_profile"]["facebook_link"]).to eq(user.user_profile.facebook_link)
+      expect(res_body["user_profile"]["instagram_link"]).to eq(user.user_profile.instagram_link)
     end
   end
 
@@ -36,7 +36,7 @@ RSpec.describe "Api::V1::Users" do
         }.not_to change(User, :count)
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(json["errors"]).not_to be_empty
+        expect(res_body["errors"]).not_to be_empty
       end
     end
   end
