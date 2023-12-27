@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe Favourite do
   describe "モデルの関連付け" do
-    it "Userモデルと正しく関連付けられていること" do
+    it "Userモデルと適正に関連付けられていること" do
       association = Favourite.reflect_on_association(:user)
       expect(association.macro).to eq :belongs_to
     end
 
-    it "Eventモデルと正しく関連付けられていること" do
+    it "Eventモデルと適正に関連付けられていること" do
       association = Favourite.reflect_on_association(:event)
       expect(association.macro).to eq :belongs_to
     end
