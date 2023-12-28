@@ -6,6 +6,7 @@ RSpec.describe User do
       association = User.reflect_on_association(:user_profile)
       expect(association.macro).to eq :has_one
     end
+
     it "ユーザー削除時にプロフィールも削除されること" do
       user = create(:demo_user)
       expect {
@@ -17,10 +18,11 @@ RSpec.describe User do
       association = User.reflect_on_association(:events)
       expect(association.macro).to eq :has_many
     end
+
     it "ユーザー削除時に関連するイベントも全て削除されること" do
       user = create(:demo_user)
-      event1 = create(:event, user: user)
-      event2 = create(:event, user: user)
+      create_list(:event, 2, user:)
+
       expect {
         user.destroy
       }.to change(Event, :count).by(-2)
@@ -30,14 +32,14 @@ RSpec.describe User do
       association = User.reflect_on_association(:comments)
       expect(association.macro).to eq :has_many
     end
+
     it "ユーザー削除時に関連するコメントも全て削除されること" do
       user = create(:demo_user)
-      event = create(:event, user: user)  # ユーザーに関連付けられたイベントを作成
-    
+      event = create(:event, user:)  # ユーザーに関連付けられたイベントを作成
+
       # コメントを作成し、関連付けるイベントを指定
-      comment1 = create(:comment, user: user, event: event)
-      comment2 = create(:comment, user: user, event: event)
-    
+      create_list(:comment, 2, user:, event:)
+
       expect {
         user.destroy
       }.to change(Comment, :count).by(-2)  # 関連するコメントが2つ削除されることを期待
@@ -47,12 +49,13 @@ RSpec.describe User do
       association = User.reflect_on_association(:favourites)
       expect(association.macro).to eq :has_many
     end
+
     it "ユーザー削除時に関連するお気に入りも全て削除されること" do
       user = create(:demo_user)
       event = create(:event)
-      favourite1 = create(:favourite, user: user, event: event)
-      favourite2 = create(:favourite, user: user, event: event)
-  
+      create(:favourite, user:, event:)
+      create(:favourite, user:, event:)
+
       expect {
         user.destroy
       }.to change(Favourite, :count).by(-2)

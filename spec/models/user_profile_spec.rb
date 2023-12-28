@@ -7,10 +7,12 @@ RSpec.describe UserProfile do
       expect(association.macro).to eq :belongs_to
     end
   end
+
   describe "バリデーション" do
     let(:user) { create(:demo_user) }
+
     it "bio, avatar, x_link, facebook_link, instagram_linkが空文字でも有効であること" do
-      user_profile = build(:user_profile, user: user, bio: "", avatar: "", x_link: "", facebook_link: "", instagram_link: "")
+      user_profile = build(:user_profile, user:, bio: "", avatar: "", x_link: "", facebook_link: "", instagram_link: "")
       expect(user_profile).to be_valid
     end
   end
