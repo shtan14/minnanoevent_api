@@ -102,7 +102,7 @@ class Api::V1::EventsController < ApplicationController
     end
 
     def fetch_events
-      per_page = 10 # 1ページあたりのイベント数を設定
+      per_page = 8 # 1ページあたりのイベント数を設定
       page = params[:page] || 1 # ページ番号が指定されていなければ1ページ目とする
       base_query = Event.includes(:categories, :event_images)
       base_query = if params[:user_id]
