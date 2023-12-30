@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :event_image do
-    # TODO: todo
+    association :event
+    event_image { "test" }
   end
 end

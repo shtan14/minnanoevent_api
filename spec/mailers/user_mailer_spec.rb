@@ -3,7 +3,7 @@ require "spec_helper"
 
 RSpec.describe UserMailer do
   describe "アカウント認証メール" do
-    let(:demo_user) { create(:demo_user) }  # デモユーザーを作成
+    let(:demo_user) { create(:demo_user) }
     let(:mail) { UserMailer.account_activation(demo_user) }
 
     it "メールのヘッダー表記が適切であること" do

@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :favourite do
-    # TODO: todo
+    association :user, factory: :demo_user
+    association :event
   end
 end

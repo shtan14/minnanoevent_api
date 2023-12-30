@@ -1,0 +1,1 @@
+[{"severity":"convention","location":{"begin_pos":208,"end_pos":212},"message":"Style/HashSyntax: Omit the hash value.","cop_name":"Style/HashSyntax","status":"uncorrected"}]

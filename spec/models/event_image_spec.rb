@@ -1,5 +1,10 @@
 require "rails_helper"
 
 RSpec.describe EventImage do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "モデルの関連付け" do
+    it "Eventモデルと適正に関連付けられていること" do
+      association = EventImage.reflect_on_association(:event)
+      expect(association.macro).to eq :belongs_to
+    end
+  end
 end

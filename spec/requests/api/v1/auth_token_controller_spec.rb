@@ -48,7 +48,7 @@ RSpec.describe Api::V1::AuthTokenController do
       expect(res_body["expires"]).to be_within(1).of(@access_lifetime_to_i)
     end
 
-    it "access_tokenが正しくデコードされ、ユーザーと期限が一致していること" do
+    it "access_tokenが適正にデコードされ、ユーザーと期限が一致していること" do
       access_token = User.decode_access_token(res_body[@access_token_key])
       expect(access_token.entity_for_user).to eq @user
 
@@ -63,7 +63,7 @@ RSpec.describe Api::V1::AuthTokenController do
       expect(cookie[:http_only]).to be_truthy
     end
 
-    it "refresh_tokenが正しくデコードされ、ユーザー、jti、および有効期限が一致していること" do
+    it "refresh_tokenが適正にデコードされ、ユーザー、jti、および有効期限が一致していること" do
       token_from_cookies = cookies[@session_key]
       refresh_token = User.decode_refresh_token(token_from_cookies)
       @user.reload
@@ -155,7 +155,6 @@ RSpec.describe Api::V1::AuthTokenController do
       # 2つ目のブラウザでログイン
       login(@params)
       expect(response).to have_http_status(:ok)
-      # new_refresh_token = cookies[@session_key]
 
       # cookieに古いrefresh_tokenをセット
       cookies[@session_key] = old_refresh_token
@@ -167,10 +166,6 @@ RSpec.describe Api::V1::AuthTokenController do
 
       # cookieは削除されているか
       expect(cookies[@session_key]).to be_blank
-
-      # 要確認
-      # jtiエラーはカスタムメッセージを返しているか
-      # expect(res_body["error"]).to eq("Invalid jti for refresh token")
     end
 
     it "有効期限後はアクセスが失敗すること" do

@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :comment do
-    # TODO: todo
+    association :user, factory: :demo_user
+    association :event
+    comment { "テストコメント" }
   end
 end
