@@ -12,10 +12,9 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 RSpec.configure do |config|
-  # テストデータはFactoryBotを使用するためコメントアウト
-  # config.before(:suite) do
-  #   load "#{Rails.root}/db/seeds.rb"
-  # end
+  config.before(:suite) do
+    load "#{Rails.root}/db/seeds.rb"
+  end
   config.include UserHelpers
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{Rails.root}/spec/fixtures"
