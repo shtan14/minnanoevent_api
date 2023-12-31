@@ -29,11 +29,12 @@ class Api::V1::EventsController < ApplicationController
   end
 
   def update
-    event = Event.find(params[:id])
+    # 現在のユーザーが所有するイベントのみを取得
+    event = current_user.events.find_by(id: params[:id])
 
-    # イベントの所有者かどうかをチェック
-    if event.user != current_user
-      return render json: { errors: ["更新権限がありません。"] }, status: :forbidden
+    # イベントが見つからない、または他のユーザーのイベントの場合
+    unless event
+      return render json: { errors: ["編集権限がありません。"] }, status: :forbidden
     end
 
     ActiveRecord::Base.transaction do
