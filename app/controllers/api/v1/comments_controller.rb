@@ -34,7 +34,11 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def destroy
-    comment = Comment.find(params[:id])
+    comment = current_user.comments.find_by(id: params[:id])
+    # コメントが見つからない、または他のユーザーのコメントの場合
+    unless comment
+      return render json: { error: "削除権限がありません。" }, status: :forbidden
+    end
     if comment.destroy
       head :no_content
     else
