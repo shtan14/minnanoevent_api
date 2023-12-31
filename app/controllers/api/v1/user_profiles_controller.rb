@@ -1,5 +1,4 @@
 class Api::V1::UserProfilesController < ApplicationController
-  # skip_before_action :xhr_request?, only: %i[show update]
   before_action :authenticate_user, only: [:update]
 
   def show

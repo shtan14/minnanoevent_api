@@ -1,6 +1,4 @@
 class Api::V1::CategoriesEventsController < ApplicationController
-  # TODO: 開発時xhr_request?を無効化。最後は有効化させる。
-  skip_before_action :xhr_request?, only: %i[create destroy]
   # イベントにカテゴリーを関連付ける
   def create
     event = Event.find(params[:event_id])

@@ -1,6 +1,4 @@
 class Api::V1::CommentsController < ApplicationController
-  # TODO: 開発時xhr_request?を無効化。最後は有効化させる。
-  skip_before_action :xhr_request?, only: %i[create index]
   before_action :authenticate_user, only: %i[create destroy]
 
   def index
@@ -39,6 +37,7 @@ class Api::V1::CommentsController < ApplicationController
     unless comment
       return render json: { error: "削除権限がありません。" }, status: :forbidden
     end
+
     if comment.destroy
       head :no_content
     else

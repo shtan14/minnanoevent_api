@@ -5,7 +5,7 @@ RSpec.describe "Api::V1::Users" do
     let(:user) { create(:demo_user) }
 
     it "想定通りのユーザープロフィールを返すこと" do
-      get "/api/v1/users/#{user.id}"
+      get "/api/v1/users/#{user.id}", headers: { "X-Requested-With": "XMLHttpRequest" }
       expect(response).to have_http_status(:success)
 
       expect(res_body["name"]).to eq(user.name)
@@ -23,7 +23,7 @@ RSpec.describe "Api::V1::Users" do
 
     it "ユーザーが作成されること" do
       expect {
-        post "/api/v1/users", params: { user: user_params }
+        post "/api/v1/users", params: { user: user_params }, headers: { "X-Requested-With": "XMLHttpRequest" } # Ajaxリクエストを模倣するためにヘッダーを追加
       }.to change(User, :count).by(1)
     end
 
@@ -32,7 +32,7 @@ RSpec.describe "Api::V1::Users" do
 
       it "ユーザーが作成されないこと" do
         expect {
-          post "/api/v1/users", params: { user: invalid_params }
+          post "/api/v1/users", params: { user: invalid_params }, headers: { "X-Requested-With": "XMLHttpRequest" }
         }.not_to change(User, :count)
 
         expect(response).to have_http_status(:unprocessable_entity)
