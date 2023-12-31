@@ -9,7 +9,7 @@ class Api::V1::CategoriesController < ApplicationController
 
   def show
     category = Category.find(params[:id])
-    events = category.events.includes(:categories, :event_images)
+    events = category.events.where("event_start_datetime >= ?", Time.zone.now.beginning_of_day).includes(:categories, :event_images).order(event_start_datetime: :asc)
     render json: events, include: %i[categories event_images]
   end
 end
