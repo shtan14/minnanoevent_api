@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "みんなのイベント"
+  default from: "postmaster@mg.minnanoevent.com"
   layout "mailer"
 end

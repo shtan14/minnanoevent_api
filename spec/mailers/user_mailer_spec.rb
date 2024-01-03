@@ -9,7 +9,7 @@ RSpec.describe UserMailer do
     it "メールのヘッダー表記が適切であること" do
       expect(mail.subject).to eq("【みんなのイベント】アカウント認証をお願いします")
       expect(mail.to).to eq([demo_user.email])
-      expect(mail.from).to eq(["みんなのイベント"])
+      expect(mail.from).to eq(["postmaster@mg.minnanoevent.com"])
     end
 
     it "メールの本文表記が適切であること" do
