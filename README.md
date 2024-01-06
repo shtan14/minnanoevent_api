@@ -1,73 +1,65 @@
 # 概要
-サービス名：みんなのイベント  
-フロエンドはこちらです。  
+### サービス名：みんなのイベント  
+* 「みんなのイベント」は、だれでも気軽に、簡単に、地域の身近なイベントが投稿でき、だれもがイベント情報にアクセスできる、そんなイベント情報共有サイトです。  
+本サイトを通じて、今まで知らなかった地域の催しが知れたり、参加してみることでコミュニティの輪が広がったり、地域の賑わいづくりの一助となれたら、という想いで制作しました。
+
+
+* サービスURL：https://minnanoevent.com/  
+* かんたんログインで、会員登録せずに機能をお試しいただけます。  
+
+
+
+* レスポンシブ対応のため、PCでもスマートフォンでもご利用いただけます。
+
+* フロエンドリポジトリはこちらです。  
 〜〜〜〜〜
-
-https://minnanoevent.com/  
-かんたんログインで、会員登録せずに機能をお試しいただけます。  
-
-レスポンシブ対応のため、PCでもスマートフォンでもご利用いただけます。
-
-
-「みんなのイベント」は地域のイベント情報の共有サイトです。だれでも気軽に、簡単に、地域の身近なイベントが投稿でき、だれもがイベント情報にアクセスができる、そんなイベント情報プラットフォームです。
-サービス概要
-HayabusaTripは、「旅の準備をもっとシンプルにしたい！」という想いから作られた、無料の旅行プラン共有サービスです。
-
-わずか3ステップで旅行プランを共有できる直感的なUIで、ユーザーの面倒な旅行の準備をサポートします。
-
-● サービスURL
-https://www.hayabusatrip.com
-
-
-
-● 紹介記事(Qiita)
-
-
-開発背景や、サービスのリリースまでに勉強したことなどをまとめています。
-何かあれば、こちらまでお気軽にご連絡ください。
-
-メイン機能の使い方
-旅行プラン作成	旅行スポット追加	旅行プラン公開
-旅行プラン作成まずは、旅行プラン作成ボタンを押して、各旅行情報を記入後に作成ボタンを押す。	旅行スポット追加次に、スポット追加ボタンを押して、各スポット情報を記入後に追加ボタンを押す。	旅行プラン公開最後に、三点リーダーから公開状態の変更ボタンを押して、公開に変更したら完了！
-使用技術一覧
-バックエンド: Ruby 3.2.2 / Rails 7.0.7.2
-
-コード解析 / フォーマッター: Rubocop
-テストフレームワーク: RSpec
-フロントエンド: TypeScript 5.0.2 / React 18.2.0 / Next.js 13.2.4
-
-コード解析: ESLint
-フォーマッター: Prettier
-テストフレームワーク: Jest / React Testing Library
-CSSフレームワーク: Tailwind CSS
-主要パッケージ: Axios / Font Awesome / React Paginate / React Responsive Modal / React Toastify
-インフラ: AWS(Route53 / Certificate Manager / ALB / VPC / ECR / ECS Fargate / RDS MySQL / S3) / Nginx / Vercel
-
-CI / CD: GitHub Actions
-
-環境構築: Docker / Docker Compose
-
-認証: Firebase Authentication
-
-主要対応一覧
-ユーザー向け
-機能
-メールアドレスとパスワードを利用したユーザー登録 / ログイン機能
-Googleアカウントを利用したユーザー登録 / ログイン機能
-
 # 機能一覧
+* 会員登録（メール認証） / 退会
+* ログイン（JWT認証） / かんたんログイン / ログアウト
+* イベント一覧表示 / カテゴリー別イベント一覧表示
+* 個別イベント詳細表示
+* 個別イベントのコメント表示
+* ユーザー詳細ページ表示
+* ユーザーが主催するイベント一覧表示
+* フリーワード検索 / 日付検索
+* レスポンシブデザイン
+* トースト表示 / エラー画面表示
+* 無限スクロール（vue-infinite-loading）  
+* プロフィール編集（アバター画像、自己紹介文、SNSリンク）
+* お気に入り追加・削除
+* お気に入りに追加したイベント一覧表示
+* コメント投稿・削除
+* イベント投稿・編集・削除
 
 
 # 技術一覧
+#### バックエンド
+* Ruby 3.2.2
+* Ruby on Rails 7.0.5
+* RSpec / RuboCop
+* nginx / puma
+
+#### フロントエンド
+* Nuxt.js 2.17.2
+* Vue.js 2.7.15
+* Vuetify
+* JEST / eslint / prettier
+
+#### インフラ
+* AWS (ECS(Fargate) / VPC / ECR / RDS / Systems Manager / Certificate Manager / ALB /S3 / CloudWatch / Route 53 / IAM )
+
+#### 環境構築
+* Docker / docker-compose
+
+#### CI/CD
+* GitHub Actions
+
+#### 認証
+* JWT
 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# インフラ構成図
+![インフラ構成図](public/infra.png)
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-
+# ER図
+![ER図](public/ER.jpg)
