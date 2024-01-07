@@ -30,15 +30,9 @@
 <br>
 
 # 主要機能
-
-
-| かんたんログイン| ログイン |
+| 一覧表示| かんたんログイン |
 | ---- | ---- |
-| ![簡単ログイン](https://github.com/shtan14/myapp_api/assets/127017760/7673e79a-05b4-42f2-9afd-16f8b3d4820e) | ![簡単ログイン](https://github.com/shtan14/myapp_api/assets/127017760/7673e79a-05b4-42f2-9afd-16f8b3d4820e) |
-
-| 簡単ログイン| ログイン |
-| ---- | ---- |
-| ![簡単ログイン](https://github.com/shtan14/myapp_api/assets/127017760/7673e79a-05b4-42f2-9afd-16f8b3d4820e) | ![簡単ログイン](https://github.com/shtan14/myapp_api/assets/127017760/7673e79a-05b4-42f2-9afd-16f8b3d4820e) |
+| ![イベント一覧](https://github.com/shtan14/myapp_api/assets/127017760/170db0d3-5444-4738-b37d-123f0b984ef9) | ![簡単ログイン](https://github.com/shtan14/myapp_api/assets/127017760/7673e79a-05b4-42f2-9afd-16f8b3d4820e) |
 
 <br>
 
