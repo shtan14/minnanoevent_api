@@ -34,6 +34,15 @@
 | ---- | ---- |
 | ![イベント一覧](https://github.com/shtan14/myapp_api/assets/127017760/170db0d3-5444-4738-b37d-123f0b984ef9) | ![簡単ログイン](https://github.com/shtan14/myapp_api/assets/127017760/7673e79a-05b4-42f2-9afd-16f8b3d4820e) |
 
+| プロフィール編集| 検索 |
+| ---- | ---- |
+| ![プロフィール編集](https://github.com/shtan14/myapp_api/assets/127017760/8fe9fd4d-3ac8-43e2-9ce3-f2db98dd9462) | ![簡単ログイン](https://github.com/shtan14/myapp_api/assets/127017760/7673e79a-05b4-42f2-9afd-16f8b3d4820e) |
+
+| コメント投稿| イベント投稿 |
+| ---- | ---- |
+| ![プロフィール編集](https://github.com/shtan14/myapp_api/assets/127017760/8fe9fd4d-3ac8-43e2-9ce3-f2db98dd9462) | ![簡単ログイン](https://github.com/shtan14/myapp_api/assets/127017760/7673e79a-05b4-42f2-9afd-16f8b3d4820e) |
+
+
 <br>
 
 # 技術一覧
