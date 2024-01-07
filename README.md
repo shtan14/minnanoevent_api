@@ -10,6 +10,22 @@
 
 <br>
 
+# 主要機能
+
+| 一覧表示| かんたんログイン |
+| ---- | ---- |
+| ![イベント一覧](https://github.com/shtan14/myapp_api/assets/127017760/170db0d3-5444-4738-b37d-123f0b984ef9) | ![簡単ログイン](https://github.com/shtan14/myapp_api/assets/127017760/7673e79a-05b4-42f2-9afd-16f8b3d4820e) |
+
+| プロフィール編集| 検索 |
+| ---- | ---- |
+| ![プロフィール編集](https://github.com/shtan14/myapp_api/assets/127017760/8fe9fd4d-3ac8-43e2-9ce3-f2db98dd9462) | ![検索](https://github.com/shtan14/myapp_api/assets/127017760/e995eefd-d916-4443-9da8-6532da548c59) |
+
+| コメント投稿| イベント投稿 |
+| ---- | ---- |
+| ![コメント](https://github.com/shtan14/myapp_api/assets/127017760/d7403c7b-d98c-4009-8c43-4f33a7af38b1)| ![イベント投稿](https://github.com/shtan14/myapp_api/assets/127017760/da21a4b1-e036-42eb-b39a-e1ac80c7d057) |
+
+<br>
+
 # 機能一覧
 * 会員登録（メール認証） / 退会
 * ログイン（JWT認証） / かんたんログイン / ログアウト
@@ -29,22 +45,6 @@
 
 <br>
 
-# 主要機能
-| 一覧表示| かんたんログイン |
-| ---- | ---- |
-| ![イベント一覧](https://github.com/shtan14/myapp_api/assets/127017760/170db0d3-5444-4738-b37d-123f0b984ef9) | ![簡単ログイン](https://github.com/shtan14/myapp_api/assets/127017760/7673e79a-05b4-42f2-9afd-16f8b3d4820e) |
-
-| プロフィール編集| 検索 |
-| ---- | ---- |
-| ![プロフィール編集](https://github.com/shtan14/myapp_api/assets/127017760/8fe9fd4d-3ac8-43e2-9ce3-f2db98dd9462) | ![簡単ログイン](https://github.com/shtan14/myapp_api/assets/127017760/7673e79a-05b4-42f2-9afd-16f8b3d4820e) |
-
-| コメント投稿| イベント投稿 |
-| ---- | ---- |
-| ![プロフィール編集](https://github.com/shtan14/myapp_api/assets/127017760/8fe9fd4d-3ac8-43e2-9ce3-f2db98dd9462) | ![簡単ログイン](https://github.com/shtan14/myapp_api/assets/127017760/7673e79a-05b4-42f2-9afd-16f8b3d4820e) |
-
-
-<br>
-
 # 技術一覧
 * バックエンド
   * Ruby 3.2.2
@@ -57,7 +57,7 @@
   * Vuetify
   * JEST / eslint / prettier
 * インフラ
-  * AWS (ECS(Fargate) / VPC / ECR / RDS / Systems Manager / Certificate Manager / ALB /S3 / CloudWatch / Route 53 / IAM )
+  * AWS (ECS(Fargate) / VPC / ECR / RDS / Systems Manager / Certificate Manager / ALB / S3 / CloudWatch / Route 53 / IAM )
 * 環境構築
   * Docker / docker-compose
 * CI/CD
