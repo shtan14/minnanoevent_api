@@ -8,6 +8,9 @@
 * フロントエンドリポジトリはこちらです。  
 https://github.com/shtan14/minnanoevent_front
 
+* Zenn　ポートフォリオ紹介記事です。  
+https://zenn.dev/shimouta/articles/09506381c0b043
+
 <br>
 
 # 主要機能
