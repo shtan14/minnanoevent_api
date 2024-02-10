@@ -33,6 +33,8 @@
 .DS_Store
 /.ash_history
 /.irb_history
+/.psql_history
+/.rdbg_history
 
 # Ignore rubocop_cache.
 /.cache
