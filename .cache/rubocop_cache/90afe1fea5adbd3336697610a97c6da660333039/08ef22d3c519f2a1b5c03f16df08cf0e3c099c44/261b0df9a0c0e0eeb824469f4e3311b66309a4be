@@ -1,1 +1,0 @@
-[{"severity":"warning","location":{"begin_pos":0,"end_pos":0},"message":"Lint/EmptyFile: Empty file detected.","cop_name":"Lint/EmptyFile","status":"unsupported"}]

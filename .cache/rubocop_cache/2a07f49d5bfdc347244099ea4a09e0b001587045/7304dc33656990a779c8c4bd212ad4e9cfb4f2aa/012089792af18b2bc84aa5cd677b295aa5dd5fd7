@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":222,"end_pos":225},"message":"RSpec/EmptyLineAfterExample: Add an empty line after `it`.","cop_name":"RSpec/EmptyLineAfterExample","status":"uncorrected"}]

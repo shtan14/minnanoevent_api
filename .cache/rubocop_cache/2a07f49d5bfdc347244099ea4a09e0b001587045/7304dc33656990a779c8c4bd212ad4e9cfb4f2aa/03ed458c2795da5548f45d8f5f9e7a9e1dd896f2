@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":1,"end_pos":18},"message":"Layout/LeadingEmptyLines: Unnecessary blank line at the beginning of the source.","cop_name":"Layout/LeadingEmptyLines","status":"uncorrected"}]

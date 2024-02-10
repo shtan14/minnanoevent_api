@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":53,"end_pos":58},"message":"Style/CommentAnnotation: Annotation comment, with keyword `TODO`, is missing a note.","cop_name":"Style/CommentAnnotation","status":"unsupported"}]

@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":53,"end_pos":58},"message":"Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.","cop_name":"Style/CommentAnnotation","status":"uncorrected"}]

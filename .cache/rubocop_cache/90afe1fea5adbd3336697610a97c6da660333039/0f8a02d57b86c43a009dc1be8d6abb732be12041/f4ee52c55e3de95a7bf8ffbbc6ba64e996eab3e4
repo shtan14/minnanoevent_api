@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":2706,"end_pos":2710},"message":"Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.","cop_name":"Rails/Output","status":"uncorrected"}]

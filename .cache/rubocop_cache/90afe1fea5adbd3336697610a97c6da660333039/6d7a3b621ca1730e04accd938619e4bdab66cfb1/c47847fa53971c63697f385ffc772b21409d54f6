@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":108,"end_pos":111},"message":"Rails/HttpStatus: Prefer `:ok` over `200` to define HTTP status code.","cop_name":"Rails/HttpStatus","status":"uncorrected"}]

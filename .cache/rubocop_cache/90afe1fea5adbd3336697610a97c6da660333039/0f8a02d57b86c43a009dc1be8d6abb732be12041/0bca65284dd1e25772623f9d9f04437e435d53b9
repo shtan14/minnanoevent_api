@@ -1,1 +1,0 @@
-[{"severity":"error","location":{"begin_pos":2839,"end_pos":2840},"message":"Lint/Syntax: unexpected token tNL\n(Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)","cop_name":"Lint/Syntax","status":"unsupported"}]

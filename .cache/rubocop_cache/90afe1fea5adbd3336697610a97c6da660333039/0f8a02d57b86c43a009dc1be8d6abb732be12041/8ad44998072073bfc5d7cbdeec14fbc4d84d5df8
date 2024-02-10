@@ -1,1 +1,0 @@
-[{"severity":"warning","location":{"begin_pos":1732,"end_pos":1739},"message":"Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.","cop_name":"Lint/UnderscorePrefixedVariableName","status":"unsupported"}]

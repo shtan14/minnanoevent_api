@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":838,"end_pos":847},"message":"Style/FetchEnvVar: Use `ENV.fetch(\"TZ\")` or `ENV.fetch(\"TZ\", nil)` instead of `ENV[\"TZ\"]`.","cop_name":"Style/FetchEnvVar","status":"uncorrected"}]

@@ -1,1 +1,0 @@
-[{"severity":"warning","location":{"begin_pos":653,"end_pos":660},"message":"Lint/UselessAssignment: Useless assignment to variable - `user_id`.","cop_name":"Lint/UselessAssignment","status":"unsupported"}]

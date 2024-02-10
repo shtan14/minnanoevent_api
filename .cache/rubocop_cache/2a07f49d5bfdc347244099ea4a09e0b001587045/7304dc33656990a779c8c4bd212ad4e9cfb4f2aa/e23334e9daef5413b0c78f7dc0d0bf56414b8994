@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":45,"end_pos":83},"message":"FactoryBot/AssociationStyle: Use implicit style to define associations.","cop_name":"FactoryBot/AssociationStyle","status":"uncorrected"}]

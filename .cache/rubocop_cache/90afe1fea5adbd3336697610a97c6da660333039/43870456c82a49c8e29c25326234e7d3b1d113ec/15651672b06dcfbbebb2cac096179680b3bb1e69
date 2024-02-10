@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":53,"end_pos":76},"message":"Rails/HasAndBelongsToMany: Prefer `has_many :through` to `has_and_belongs_to_many`.","cop_name":"Rails/HasAndBelongsToMany","status":"unsupported"}]

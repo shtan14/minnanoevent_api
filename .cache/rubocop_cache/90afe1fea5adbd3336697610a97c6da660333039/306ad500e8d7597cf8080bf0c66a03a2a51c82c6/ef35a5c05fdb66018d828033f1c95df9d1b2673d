@@ -1,1 +1,0 @@
-[{"severity":"error","location":{"begin_pos":1559,"end_pos":1565},"message":"Lint/Syntax: unexpected token tIDENTIFIER\n(Using Ruby 3.2 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)","cop_name":"Lint/Syntax","status":"unsupported"}]

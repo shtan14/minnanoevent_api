@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":814,"end_pos":815},"message":"Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call.","cop_name":"Style/TrailingCommaInArguments","status":"uncorrected"}]

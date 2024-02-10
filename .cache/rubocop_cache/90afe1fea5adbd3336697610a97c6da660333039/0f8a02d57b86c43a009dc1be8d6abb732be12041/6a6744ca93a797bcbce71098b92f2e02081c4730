@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":632,"end_pos":634},"message":"Naming/MethodParameterName: Method parameter must be at least 3 characters long.","cop_name":"Naming/MethodParameterName","status":"unsupported"}]

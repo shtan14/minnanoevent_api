@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":1769,"end_pos":1772},"message":"RSpec/EmptyLineAfterHook: Add an empty line after `before`.","cop_name":"RSpec/EmptyLineAfterHook","status":"uncorrected"}]

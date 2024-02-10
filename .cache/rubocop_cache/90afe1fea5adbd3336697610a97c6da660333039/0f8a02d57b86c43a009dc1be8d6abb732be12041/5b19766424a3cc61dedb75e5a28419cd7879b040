@@ -1,1 +1,0 @@
-[{"severity":"warning","location":{"begin_pos":4933,"end_pos":4950},"message":"Lint/UselessAssignment: Useless assignment to variable - `new_refresh_token`.","cop_name":"Lint/UselessAssignment","status":"unsupported"}]

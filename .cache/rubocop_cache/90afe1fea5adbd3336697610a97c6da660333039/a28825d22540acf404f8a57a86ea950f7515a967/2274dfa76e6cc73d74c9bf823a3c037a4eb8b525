@@ -1,1 +1,0 @@
-[{"severity":"warning","location":{"begin_pos":23,"end_pos":46},"message":"Lint/EmptyBlock: Empty block detected.","cop_name":"Lint/EmptyBlock","status":"unsupported"}]
